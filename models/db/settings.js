@@ -13,16 +13,16 @@ module.exports = {
     auth_cookie_name: 'doracms',
     encrypt_key : 'dora',
 //    数据库配置
-    URL: 'mongodb://127.0.0.1:27017/doracms',
+    URL: 'mongodb://101.200.204.240:27017/doracms',
     DB: 'doracms',
-    HOST: '',
+    HOST: '101.200.204.240',
     PORT: 27017,
     USERNAME: '',
     PASSWORD: '',
 
 
 //    站点基础信息配置
-    SITETITLE : '前端开发俱乐部', // 站点名称
+    SITETITLE : 'VR', // 站点名称
     SITEDOMAIN : 'http://www.html-js.cn', // 站点域名
     SITEICP : '粤ICP备15038960号-2', // 站点备案号
     SITEVERSION : 'v1.1.1', // 静态资源版本戳
@@ -68,10 +68,10 @@ module.exports = {
     regUsersList: ['userManage_user','注册用户管理'],
 
 //    本地缓存设置
-    redis_host: '127.0.0.1',
+    redis_host: '101.200.204.240',
     redis_port: 6379,
-    redis_psd : '',
-    redis_db: 0,
+    redis_psd : 'yibuxueche',
+    redis_db: 1,
 
 //    邮件相关设置
     site_email : 'xx@163.com',

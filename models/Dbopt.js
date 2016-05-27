@@ -72,13 +72,15 @@ var DbOpt = {
     updateOneByID : function(obj,req,res,logMsg){
         var params = url.parse(req.url,true);
         var targetId = params.query.uid;
-
         if(shortid.isValid(targetId)){
-            var conditions = {_id : targetId};
+            var conditions = {"_id" : targetId};
             req.body.updateDate = new Date();
-            var update = {$set : req.body};
+            var updateParams=req.body;
+            delete updateParams._id;
+            var update = {$set : updateParams};
             obj.update(conditions, update, function (err,result) {
                 if(err){
+                    console.log(err);
                     res.end(err);
                 }else{
                     console.log(logMsg+" success!");

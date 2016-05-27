@@ -4,7 +4,7 @@
 
 
 module.exports={
-    cookieSecret:"doracms",
+    cookieSecret:"vrcms",
     db:"doracms",
     host:"localhost"
 }
