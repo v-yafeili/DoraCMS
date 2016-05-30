@@ -23,10 +23,10 @@ module.exports = {
 
 //    站点基础信息配置
     SITETITLE : 'VR', // 站点名称
-    SITEDOMAIN : 'http://www.html-js.cn', // 站点域名
-    SITEICP : '粤ICP备15038960号-2', // 站点备案号
+    SITEDOMAIN : 'http://51itgirls.cn', // 站点域名
+    SITEICP : '京ICP备15038960号-2', // 站点备案号
     SITEVERSION : 'v1.1.1', // 静态资源版本戳
-    SYSTEMMAIL : 'doramart@qq.com', // 管理员个人邮箱
+    SYSTEMMAIL : '337605876@qq.com', // 管理员个人邮箱
     UPDATEFOLDER : process.cwd()+'/public/upload', // 默认上传文件夹本地路径
     TEMPSTATICFOLDER : process.cwd()+'/public/themes/', // 模板静态文件路径
     DATAOPERATION : process.cwd()+'/models/db/bat', //数据库操作脚本目录
@@ -74,8 +74,8 @@ module.exports = {
     redis_db: 1,
 
 //    邮件相关设置
-    site_email : 'xx@163.com',
-    site_email_psd : 'xxx',
+    site_email : '337605876@qq.com',
+    site_email_psd : 'kjxh_lyf',
     email_findPsd : 'findPsd',
     email_reg_active : 'reg_active',
     email_notice_contentMsg : 'notice_contentMsg',

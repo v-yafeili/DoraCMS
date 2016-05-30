@@ -103,7 +103,8 @@ var siteFunc = {
     },
 
     getCategoryList: function () {
-        return ContentCategory.find({'parentID': '0', 'state': '1'}, 'name defaultUrl').sort({'sortId': 1}).find();
+        return ContentCategory.find({'parentID': 'SkQlDXVm', 'state': '1'}, 'name defaultUrl').sort({'sortId': 1}).find();
+      //  return ContentCategory.find({'parentID': '0', 'state': '1'}, 'name defaultUrl').sort({'sortId': 1}).find();
     },
 
     getHotItemListData: function (q) {

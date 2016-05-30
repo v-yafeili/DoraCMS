@@ -69,6 +69,11 @@ var DbOpt = {
         }
 
     },
+    findOneObj:function(obj,parms,callback){
+        obj.findOne(parms, function (err,result) {
+           return callback(err,result);
+        })
+    },
     updateOneByID : function(obj,req,res,logMsg){
         var params = url.parse(req.url,true);
         var targetId = params.query.uid;
@@ -102,7 +107,12 @@ var DbOpt = {
             }
         });
     },
-
+    addOneObj:function(obj,parms,callback){
+        var newObj = new obj(parms);
+        newObj.save(function(err){
+           return callback(err);
+        });
+    },
     pagination : function(obj,req,res,conditions){
 
         var params = url.parse(req.url,true);
