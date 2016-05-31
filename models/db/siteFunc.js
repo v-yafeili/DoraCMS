@@ -27,7 +27,10 @@ var cache = require('../../util/cache');
 //系统消息
 var Notify = require("../Notify");
 function isLogined(req) {
-    return req.session.logined;
+    if(req.session) {
+        return req.session.logined;
+    }
+    return false;
 }
 
 var siteFunc = {

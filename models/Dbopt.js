@@ -212,6 +212,32 @@ var DbOpt = {
         return datasInfo;
     },
 
+    getApiPaginationResult:function(obj,req,q,filed){// 通用查询，带分页，注意参数传递格式,filed为指定字段
+    var page = parseInt(req.query.page);
+    var limit = parseInt(req.query.limit);
+    if (!page) page = 1;
+    if (!limit) limit = 15;
+    var order = req.query.order;
+    var sq = {}, Str, A = 'problemID', B = 'asc';
+    if (order) {    //是否有排序请求
+        Str = order.split('_');
+        A = Str[0]; B = Str[1];
+        sq[A] = B;    //关联数组增加查询条件，更加灵活，因为A是变量
+    } else {
+        sq.date = -1;    //默认排序查询条件
+    }
+
+    var startNum = (page - 1)*limit;
+    var resultList;
+    if(q && q.length > 1){ // 多条件只要其中一条符合
+        resultList = obj.find({'state':true}).and(q,filed).sort(sq).skip(startNum).limit(limit);
+    }else{
+        resultList = obj.find(q,filed).sort(sq).skip(startNum).limit(limit);
+    }
+
+    return resultList;
+},
+
     getDatasByParam : function(obj,req,res,q){// 通用查询list不带分页，注意参数传递格式,通过express-promise去掉了回调方式返回数据
 //        默认查询所有记录，有条件顺带排序和查询部分记录
         var order = req.query.order;

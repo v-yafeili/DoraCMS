@@ -15,6 +15,7 @@ var io = require('socket.io')();
 var users = require('./routes/users')(io);
 var admin = require('./routes/admin');
 var content = require('./routes/content');
+var apiV1=require('./routes/apiV1');
 
 //分层路由
 var adminCtrl = require('./routes/adminCtrl');
@@ -65,7 +66,15 @@ app.use(cookieParser(settings.session_secret));
 //解决异步层次混乱问题
 app.use(require('express-promise')());
 
-
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type, Authorization');
+    if (req.method.toUpperCase() === 'OPTIONS') {
+        return res.end();
+    }
+    next();
+});
 app.use(session({
     secret: settings.session_secret,
     store: new RedisStore({
@@ -143,6 +152,7 @@ app.use('/users', users);
 app.use('/admin', adminCtrl);
 app.use('/admin', admin);
 app.use('/system',system);
+app.use('/api/v1',apiV1);
 
 
 // catch 404 and forward to error handler
