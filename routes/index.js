@@ -21,10 +21,72 @@ var url = require('url');
 var cache = require('../util/cache');
 
 
+//==============================手机端接口==========================================================
+router.get('/app', function (req, res, next) {
+    siteFunc.renderToTargetPageByType(req,res,'app');
+});
+router.get('/app/details/:url', function (req, res, next) {
+
+    var url = req.params.url;
+    var currentId = url.split('.')[0];
+    if(shortid.isValid(currentId)){
+        Content.findOne({ '_id': currentId , 'state' : true}).populate('category').populate('author').exec(function(err,result){
+            if (err) {
+                console.log(err)
+            } else {
+                if (result) {
+//                更新访问量
+                    result.clickNum = result.clickNum + 1;
+                    result.save(function(){
+                        var cateParentId = result.sortPath.split(',')[1];
+                        var cateQuery = {'sortPath': { $regex: new RegExp(cateParentId, 'i') }};
+
+                        siteFunc.getContentsCount(req,res,cateParentId,cateQuery,function(count){
+                            siteFunc.renderToTargetPageByType(req,res,'appdetail',{count : count, cateQuery : cateQuery, detail : result});
+                        });
+
+                    })
+                } else {
+                    siteFunc.renderToTargetPageByType(req,res,'error',{info : '非法操作!',message : settings.system_illegal_param, page : 'do404'});
+                }
+            }
+        });
+    }else{
+        siteFunc.renderToTargetPageByType(req,res,'error',{info : '非法操作!',message : settings.system_illegal_param , page : 'do500'});
+    }
+
+});
+
+router.get('/app/:forder/:defaultUrl', function (req, res, next) {
+    var defaultUrl = req.params.defaultUrl;
+    var url = defaultUrl.split('___')[1];
+    var currentUrl = url;
+    if (url) {
+        if(url.indexOf("—") >= 0){
+            currentUrl = url.split("—")[0];
+            var catePageNo = (url.split("—")[1]).split(".")[0];
+            if(catePageNo && validator.isNumeric(catePageNo)){
+                req.query.page = catePageNo;
+            }
+        }
+        appqueryCatePage(req, res, currentUrl);
+    }else{
+        next();
+    }
+
+});
+//==================================================================================================
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
 
     siteFunc.renderToTargetPageByType(req,res,'index');
+
+});
+
+router.get('/test', function (req, res, next) {
+
+   res.render('test');
 
 });
 
@@ -161,5 +223,31 @@ function queryCatePage(req, res, cateId) {
     }
 
 }
+
+function appqueryCatePage(req, res, cateId) {
+
+    if(shortid.isValid(cateId)){
+        ContentCategory.findOne({"_id": cateId}).populate('contentTemp').exec(function(err,result){
+            if (err) {
+                siteFunc.renderToTargetPageByType(req,res,'error',{info : '页面未找到!',message : err.message, page : 'do500'});
+            } else {
+                if (result) {
+                    var contentQuery = {'sortPath': { $regex: new RegExp(result._id, 'i') },'state' : true};
+                    var cateParentId = result.sortPath.split(',')[1];
+                    var cateQuery = {'sortPath': { $regex: new RegExp(cateParentId, 'i') }};
+
+                    siteFunc.renderToTargetPageByType(req,res,'appcontentList',{contentQuery : contentQuery,cateQuery : cateQuery,result : result});
+                }
+                else {
+                    siteFunc.renderToTargetPageByType(req,res,'error',{info : '非法操作!',message : settings.system_illegal_param, page : 'do500'});
+                }
+            }
+        });
+    }else{
+        siteFunc.renderToTargetPageByType(req,res,'error',{info : '非法操作!',message : settings.system_illegal_param, page : 'do500'});
+    }
+
+}
+
 
 module.exports = router;

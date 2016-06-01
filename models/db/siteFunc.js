@@ -440,32 +440,73 @@ var siteFunc = {
 
     //根据模板获取跳转链接
     renderToTargetPageByType : function(req,res,type,params){
-
+       var deviceType=1; //默认是pc
+        var deviceAgent = req.headers['user-agent'].toLowerCase();
+        var agentID = deviceAgent.match(/(iphone|ipod|ipad|android)/);
+        if(agentID){
+            //指到手机、pad的网页
+            deviceType=0;
+            }else{
+            //指到pc网页
+            deviceType=1;
+            }
+        //console.log(deviceType);
+        //console.log(agentID);
         this.getFrontTemplate(req,res,function(temp) {
             var targetPath;
             if (temp) {
                 var defaultTempPath = settings.SYSTEMTEMPFORDER + temp.alias + '/public/defaultTemp';
                 if(type == 'index'){
-                    targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/index';
-                    res.render(targetPath , siteFunc.setDataForIndex(req, res, {'type': 'content','state' : true} , temp.alias, defaultTempPath));
-                }else if(type == 'sitemap'){
+                    if(deviceType==1) {
+                        targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/index';
+                        res.render(targetPath, siteFunc.setDataForIndex(req, res, {'type': 'content', 'state': true},
+                            temp.alias, defaultTempPath));
+                    }else {
+                        targetPath =  'app/index';
+                        res.render(targetPath , siteFunc.setDataForIndex(req, res, {'type': 'content','state' : true} ,
+                            temp.alias, 'app/temp'));
+                    }
+                }else if( type == 'app') {
+                    targetPath =  'app/index';
+                    res.render(targetPath , siteFunc.setDataForIndex(req, res, {'type': 'content','state' : true} ,
+                        temp.alias, 'app/temp'));
+                }
+                else if( type == 'appdetail') {
+                    targetPath =  'app/detial';
+                    res.render(targetPath , siteFunc.setDetailInfo(req, res, params , temp.alias, 'app/temp'));
+                }
+                else if( type == 'appcontentList') {
+                    targetPath =  'app/index';
+                    res.render(targetPath, siteFunc.setDataForCate(req, res, params, temp.alias,  'app/temp'));
+                }
+                else if(type == 'sitemap'){
                     targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/sitemap';
                     res.render(targetPath , siteFunc.setDataForHtmlSiteMap(req, res, params , temp.alias, defaultTempPath));
                 }else if(type == 'contentList'){
-                    if(params.result.contentTemp){
-                        targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/' + params.result.contentTemp.forder + '/contentList';
+                    if (deviceType==1) {
+                        if (params.result.contentTemp) {
+                            targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/' + params.result.contentTemp.forder + '/contentList';
+                        } else {
+                            targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/' + siteFunc.getDefaultTempItem(temp) + '/contentList';
+                        }
+                        res.render(targetPath, siteFunc.setDataForCate(req, res, params, temp.alias, defaultTempPath));
                     }else{
-                        targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/' + siteFunc.getDefaultTempItem(temp) + '/contentList';
+                        targetPath =  'app/index';
+                        res.render(targetPath, siteFunc.setDataForCate(req, res, params, temp.alias,  'app/temp'));
                     }
-                    res.render(targetPath, siteFunc.setDataForCate(req, res, params, temp.alias, defaultTempPath));
                 }else if(type == 'detail'){
-                    if(params.detail.category.contentTemp){
-                        var targetForder = siteFunc.getTempItemById(temp,params.detail.category.contentTemp);
-                        targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/' + targetForder + '/detail';
-                    }else{
-                        targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/' + siteFunc.getDefaultTempItem(temp) + '/detail';
+                    if (deviceType==1) {
+                        if (params.detail.category.contentTemp) {
+                            var targetForder = siteFunc.getTempItemById(temp, params.detail.category.contentTemp);
+                            targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/' + targetForder + '/detail';
+                        } else {
+                            targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/' + siteFunc.getDefaultTempItem(temp) + '/detail';
+                        }
+                        res.render(targetPath, siteFunc.setDetailInfo(req, res, params, temp.alias, defaultTempPath));
+                    }else {
+                        targetPath =  'app/detial';
+                        res.render(targetPath , siteFunc.setDetailInfo(req, res, params , temp.alias, 'app/temp'));
                     }
-                    res.render(targetPath , siteFunc.setDetailInfo(req, res, params , temp.alias, defaultTempPath));
                 }else if(type == 'user'){
                     targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/users/' + params.page;
                     res.render(targetPath, siteFunc.setDataForUser(req, res, params , temp.alias, defaultTempPath));
@@ -479,8 +520,13 @@ var siteFunc = {
                     targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/users/' + params.page;
                     res.render(targetPath, siteFunc.setDataForUserReply(req, res, params, temp.alias, defaultTempPath));
                 }else if(type == 'search'){
-                    targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/public/' + params.page;
-                    res.render(targetPath, siteFunc.setDataForSearch(req, res, params, temp.alias, defaultTempPath));
+                     if (deviceType==1) {
+                        targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/public/' + params.page;
+                        res.render(targetPath, siteFunc.setDataForSearch(req, res, params, temp.alias, defaultTempPath));
+                    }else{
+                         targetPath =  'app/index';
+                         res.render(targetPath, siteFunc.setDataForSearch(req, res, params, temp.alias,  'app/temp'));
+                     }
                 }else if(type == 'error'){
                     targetPath = settings.SYSTEMTEMPFORDER + temp.alias + '/public/' + params.page;
                     res.render(targetPath, siteFunc.setDataForError(req, res,  params, temp.alias, defaultTempPath));

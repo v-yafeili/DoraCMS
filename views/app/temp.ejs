@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--[if gt IE 9]>  <html> <![endif]-->
+<!--[if lt IE 10]> <html class="ie"> <![endif]-->
+<!--[if !IE]><!--><html><!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name='keywords' content='VR 视频' />
+    <meta name='description' content='VR 视频游戏' />
+    <script src="/themes/<%=staticforder%>/js/jquery-1.11.1.js" type="text/javascript"></script>
+
+    <link href="/themes/<%=staticforder%>/css/newblue.css" rel="stylesheet">
+
+    <link rel='stylesheet' href='/assets/css/style.css'>
+    <link rel='stylesheet' href='/assets/css/flexslider.css'>
+    <title>VR 视频</title>
+</head>
+<body>
+<header>
+    <nav id="search-container" class="search-wrap toggle-container clearfix hidden">
+        <form action="/content/searchResult/items" class="search-form">
+            <input type="text" placeholder="搜索全站内容…" class="search-input" name="searchKey">
+            <a href="javascript:void(0)" onclick="$('.search-form').submit()" class="submit">
+                <span class="hidden">搜索</span>
+            </a>
+        </form>
+    </nav>
+    <nav class="top-nav clearfix">
+        <a href="/app" class="logo left back-to-home">
+            <img src="/themes/<%=staticforder%>/images/logo.png" alt=""/>
+            <!--<i class="icon icon-logo"></i>-->
+            <h1 >VR 视频</h1>
+        </a>
+        <div class="global-search right">
+            <a href="#search-container" class="search toggle">
+                <i class="icon icon-search"></i>
+            </a>
+        </div>
+
+    </nav>
+    <nav class="sec-nav clearfix">
+        <ul class="main-nav">
+            <%for(var i=0;i<cateTypes.length;i++){%>
+            <li>
+                <a class="mn-link current"
+                   data-value="<%=cateTypes[i]._id%>" href="/app/<%=cateTypes[i].defaultUrl%>___<%=cateTypes[i]._id%>">
+                   <%=cateTypes[i].name%></a>
+            </li>
+            <%}%>
+        </ul>
+    </nav>
+</header>
+
+
+<%-body %>
+
+
+<footer>
+    <%- include ../web/temp/doraGallery/public/footer %>
+    <!--<script src='http://m.midifan.com/assets/js/jquery.flexslider-min.js'></script>-->
+    <script >
+        jQuery(document).ready(function($){
+            $(window).load(function() {
+                $('.feature-slides').flexslider({
+                    animation: "slide"
+                });
+            });
+            $(".toggle").click(function(){
+                var i = $(this).attr("href");
+                $(i).slideToggle();
+                $(this).toggleClass("active");
+                return false;
+            });
+        });
+    </script>
+</footer>
+
+</body>
+</html>

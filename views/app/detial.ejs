@@ -1,0 +1,42 @@
+
+<section class="page-content article clearfix">
+    <section class="main-content">
+        <div class="main-title clearfix">
+            <h3><%=documentInfo.title%></h3>
+        </div>
+        <div class="main-info sec">
+            <p>作者：<a href="###" target="_blank"><%=documentInfo.author.name%></a>
+                &nbsp;&nbsp;发布日期：<span class="item-time"><i class="icon-time"></i><a><%=myDateFormat(documentInfo.date)%></a></span>
+            </p>
+        </div>
+        <div class="post-content">
+            <!--<p><%- documentInfo.comments%></p>-->
+            <%if(documentInfo.hd_url.length>0){%>
+            <video  width="100%"  autoplay="autoplay" controls="controls"  src="<%=documentInfo.hd_url%>">
+                Your browser does not support the video tag.
+            </video>
+            <p style="overflow: auto"><%- documentInfo.hd_url%></p>
+            <%} else {%>
+            <video  controls="controls"src="<%=documentInfo.sd_url%>">
+                Your browser does not support the video tag.
+            </video>
+            <%}%>
+            <p>当前浏览器不支持VR视频播放<br>
+               请下载 <a href="#">VR APP</a>体验更多精彩</p>
+          </div>
+        <div class="share-detail">
+            <div class="pctiem pull-left" id="ptags">
+                <span class="yy-icon yy-soi2"></span>标签&nbsp;&nbsp;
+                <%var tagsArr = documentInfo.tags.split(',')%>
+                <%for(var i=0;i<tagsArr.length;i++){%>
+                <a target="_blank" href="###"><%=tagsArr[i]%></a>&nbsp;
+                <%}%>
+
+            </div>
+
+        </div>
+
+</section>
+</section>
+
+
