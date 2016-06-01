@@ -19,14 +19,20 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <!--<p><%- documentInfo.comments%></p>-->
                 <%if(documentInfo.hd_url.length>0){%>
-                <video  width="100%" controls="controls"  src="<%=documentInfo.hd_url%>">
-                    Your browser does not support the video tag.
-                </video>
+                <!--<video  width="100%" controls="controls"  src="<%=documentInfo.hd_url%>">-->
+                    <!--Your browser does not support the video tag.-->
+                <!--</video>-->
+
+                <iframe width="100%" scrolling="no" allowfullscreen height="400px"  frameborder="0"
+                        src="/vrview/index.html?video=<%=documentInfo.hd_url%>&image=examples/video/congo_2048.jpg"></iframe>
                 <p><%- documentInfo.hd_url%></p>
                 <%} else {%>
-                <video  controls="controls"src="<%=documentInfo.sd_url%>">
-                    Your browser does not support the video tag.
-                </video>
+                <!--<video  controls="controls"src="<%=documentInfo.sd_url%>">-->
+                    <!--Your browser does not support the video tag.-->
+                <!--</video>-->
+                <iframe width="100%" scrolling="no" allowfullscreen height="400px"  frameborder="0"
+                        src="/vrview/index.html?video=<%=documentInfo.sd_url%>&image=examples/video/congo_2048.jpg"></iframe>
+                <p><%- documentInfo.sd_url%></p>
                 <%}%>
 
             </div>
