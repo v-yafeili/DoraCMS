@@ -30,4 +30,5 @@ UtoVRData.prototype={
 
 
 var utovrdata=new UtoVRData();
-utovrdata.getVideoItem();
+//utovrdata.getVideoItem();
+//console.log(typeof undefined)

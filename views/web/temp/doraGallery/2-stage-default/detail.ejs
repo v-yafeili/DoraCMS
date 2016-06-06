@@ -23,19 +23,39 @@
                     <!--Your browser does not support the video tag.-->
                 <!--</video>-->
 
-                <iframe width="100%" scrolling="no" allowfullscreen height="400px"  frameborder="0"
-                        src="/vrview/index.html?video=<%=documentInfo.hd_url%>&image=examples/video/congo_2048.jpg"></iframe>
-                <p><%- documentInfo.hd_url%></p>
+                <!--<iframe width="100%" scrolling="no" allowfullscreen height="400px"  frameborder="0"-->
+                        <!--src="/vrview/index.html?video=<%=documentInfo.hd_url%>&image=examples/video/congo_2048.jpg"></iframe>-->
+                <div class="valiantPhoto"
+                     data-video-src='<%=documentInfo.hd_url%>'
+                     style="width: 100%;; height: 400px;">
+                    <video  id="videoid"  loop=""
+                            style="display: none;" crossOrigin="anonymous"
+                            controls=""></video>
+                </div>
+                <p>高清：<%- documentInfo.hd_url%></p>
                 <%} else {%>
                 <!--<video  controls="controls"src="<%=documentInfo.sd_url%>">-->
                     <!--Your browser does not support the video tag.-->
                 <!--</video>-->
-                <iframe width="100%" scrolling="no" allowfullscreen height="400px"  frameborder="0"
-                        src="/vrview/index.html?video=<%=documentInfo.sd_url%>&image=examples/video/congo_2048.jpg"></iframe>
-                <p><%- documentInfo.sd_url%></p>
+                <!--<iframe width="100%" scrolling="no" allowfullscreen height="400px"  frameborder="0"-->
+                        <!--src="/vrview/index.html?video=<%=documentInfo.sd_url%>&image=examples/video/congo_2048.jpg"></iframe>-->
+                <div class="valiantPhoto"
+                     data-video-src='<%=documentInfo.sd_url%>'
+                     style="width: 100%;; height: 400px;">
+                    <video  id="videoid"  loop=""
+                            style="display: none;" crossOrigin="anonymous"
+                            controls=""></video>
+                </div>
+                <p>标清：<%- documentInfo.sd_url%></p>
                 <%}%>
 
             </div>
+
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('.valiantPhoto').Valiant360();
+                });
+            </script>
             <div class="col-md-2 col-sm-2"></div>
 
         </div>

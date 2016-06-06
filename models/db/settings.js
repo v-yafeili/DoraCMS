@@ -19,6 +19,11 @@ module.exports = {
     PORT: 27017,
     USERNAME: '',
     PASSWORD: '',
+    // 七牛相关配置
+    qiniuAccessKey:"wevfn9upElhIxK6gk439BN3es6UPOSICmwmnmJkg",
+    qiniuSecretKey:"8mtk6yDx-S_I3G_8txWFIbG0_bYHZllVn0hEo-Ee",
+
+
 
 
 //    站点基础信息配置
@@ -33,10 +38,10 @@ module.exports = {
     DATABACKFORDER : 'C:/softbak/mongodbConfig/mongodata/', // 服务端数据备份目录
     MONGODBEVNPATH : '/usr/local/mongodb/bin', // LINUXmongodb环境变量(win server下不用管)
     SYSTEMTEMPFORDER : process.cwd()+'/views/web/temp/', // 系统模板安装目录
-    DORACMSAPI : 'http://api.html-js.cn', // 系统服务提供商
-    CMSDISCRIPTION : '前端开发俱乐部,分享前端知识,丰富前端技能。汇集国内专业的前端开发文档,为推动业内前端开发水平共同奋斗。html,js,css,nodejs,前端开发,jquery,web前端, web前端开发, 前端开发工程师',
-    SITEKEYWORDS : '前端开发俱乐部,前端俱乐部,DoraCMS,Nodejs内容管理系统, 前端开发, web前端, 前端开发工程师,前端资源, angularjs, 前端开发工具, nodejs ,boostrap',
-    SITEBASICKEYWORDS : '前端开发俱乐部,前端开发,前端俱乐部,DoraCMS', // 基础关键词
+    DORACMSAPI : 'http://51itgirls.cn', // 系统服务提供商
+    CMSDISCRIPTION : 'VR最全的vr视频资源站',
+    SITEKEYWORDS : 'VR 视频',
+    SITEBASICKEYWORDS : 'VR 视频', // 基础关键词
 
 
     SYSTEMMANAGE : ['sysTemManage','DoraCMS后台管理'],  // 后台模块(系统管理)
