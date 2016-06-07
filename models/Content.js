@@ -41,11 +41,7 @@ var ContentSchema = new Schema({
     hd_url:String, //高清
     sd_url:String, //标清
     syncDate: { type: Date, default: Date.now },
-
-
-
-
-
+    isQiniu:{ type: Number, default: 0 }, // 文件是否在七牛服务器  1 同步成功 2 同步失败
 
 
 //    插件信息相关属性

@@ -9,6 +9,7 @@ var settings = require('../models/db/settings');
 //需要填写你的 Access Key 和 Secret Key
 qiniu.conf.ACCESS_KEY = settings.qiniuAccessKey;
 qiniu.conf.SECRET_KEY = settings.qiniuSecretKey;
+qiniu.conf.UP_HOST = 'http://up-z1.qiniu.com';
 
 //要上传的空间
 imgBucket = 'img-resource';
@@ -38,7 +39,7 @@ function uploadFile( filetype,filename, localFile,callbak) {
     qiniu.io.putFile(token, filename, localFile, extra, function(err, ret) {
         if(!err) {
             // 上传成功， 处理返回值
-            console.log(ret.hash, ret.key, ret.persistentId);
+            //console.log(ret.hash, ret.key, ret.persistentId);
             return callbak(err, ret.key);
         } else {
             // 上传失败， 处理返回代码
@@ -49,8 +50,8 @@ function uploadFile( filetype,filename, localFile,callbak) {
 };
 
 //调用uploadFile上传
-uploadFile(1,"tsetsetet.jpg",'../spider/temp/test.jpg',function(err,data){
-    console.log('finish');
-})
+//uploadFile(0,"tsetsetet.jpg",'../spider/temp/test.jpg',function(err,data){
+//    console.log('finish');
+//})
 
 exports.upFileToQiNiu=uploadFile;

@@ -3,7 +3,7 @@
  */
 
 var  superAgent =require('superAgent');
-var async=require("async")
+var async=require("async");
 var  config=require('./spiderConfig').hotCastConfig;
 var HohCastUrl='http://api2.hotcast.cn/index.php?r=webapi/web/get-list';
 var contentModel=require("../models/Content");

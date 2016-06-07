@@ -97,6 +97,22 @@ var DbOpt = {
         }
 
     },
+    updateOneObj : function(obj,parms,callback){
+
+        var targetId = params._id;
+        if(shortid.isValid(targetId)){
+            var conditions = {"_id" : targetId};
+            var updateParams=parms;
+            delete updateParams._id;
+            var update = {$set : updateParams};
+            obj.update(conditions, update, function (err,result) {
+                return callback(err,result);
+            })
+        }else{
+            return callback(settings.system_illegal_param);
+        }
+
+    },
     addOne : function(obj,req,res){
         var newObj = new obj(req.body);
         newObj.save(function(err){
