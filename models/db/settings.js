@@ -44,7 +44,7 @@ module.exports = {
     SITEBASICKEYWORDS : 'VR 视频', // 基础关键词
 
 
-    SYSTEMMANAGE : ['sysTemManage','DoraCMS后台管理'],  // 后台模块(系统管理)
+    SYSTEMMANAGE : ['sysTemManage','后台管理'],  // 后台模块(系统管理)
     adminUsersList : ['sysTemManage_user','系统用户管理'],
     adminGroupList : ['sysTemManage_uGroup','系统用户组管理'],
     adsList : ['sysTemManage_ads','广告管理'],
