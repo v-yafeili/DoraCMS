@@ -32,7 +32,81 @@ exports.hotCastConfig=[
 
 ];
 
-exports.vrWorld
+exports.vrWorldConfig=[
+    {
+        name:"美女",
+        categoryId:"Bkz3X4KX",
+        vrname:"美女",
+        vrWorldId:"13",
+    },
+    {
+        name:"科技",
+        categoryId:"Bkz3X4KX",
+        vrname:"科幻",
+        vrWorldId:"9",
+    },
+    {
+        name:"恐怖",
+        categoryId:"Bkz3X4KX",
+        vrname:"恐怖",
+        vrWorldId:"10",
+    },
+    {
+        name:"影视",
+        categoryId:"Bkz3X4KX",
+        vrname:"喜剧",
+        vrWorldId:"11",
+    },
+    {
+        name:"娱乐",
+        categoryId:"Bkz3X4KX",
+        vrname:"热舞",
+        vrWorldId:"12",
+    },
+    {
+        name:"冒险",
+        categoryId:"Bkz3X4KX",
+        vrname:"动作",
+        vrWorldId:"14",
+    },
+    {
+        name:"娱乐",
+        categoryId:"Bkz3X4KX",
+        vrname:"娱乐",
+        vrWorldId:"15",
+    },
+    {
+        name:"娱乐",
+        categoryId:"Bkz3X4KX",
+        vrname:"汽车",
+        vrWorldId:"16",
+    },
+    {
+        name:"运动",
+        categoryId:"Bkz3X4KX",
+        vrname:"体育",
+        vrWorldId:"17",
+    },
+    {
+        name:"游戏",
+        categoryId:"Bkz3X4KX",
+        vrname:"游戏",
+        vrWorldId:"18",
+    },
+    {
+        name:"旅游",
+        categoryId:"Bkz3X4KX",
+        vrname:"旅游",
+        vrWorldId:"21",
+    },
+    {
+        name:"娱乐",
+        categoryId:"Bkz3X4KX",
+        vrname:"音乐",
+        vrWorldId:"22",
+    },
+
+]
 
 //{ id: '9', classify: '0', name: '科幻', icon: '', is_home: '2' },
 //{ id: '10', classify: '0', name: '恐怖', icon: '', is_home: '2' },
