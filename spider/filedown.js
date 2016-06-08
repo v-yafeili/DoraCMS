@@ -159,13 +159,15 @@ var searchConent=function(callback) {
 };
 
 var syncImgAndVedio=function(){
-    var filecount=1;
+    var filecount=1000;
     var currentcount=0;
     async.whilst(
         function(){return currentcount<filecount;
         },
         function(cb){
+            console.log("同步第几条数据："+currentcount);
             searchConent(function(){
+                currentcount++;
                 cb()
             })
         },

@@ -441,7 +441,7 @@ var siteFunc = {
     //根据模板获取跳转链接
     renderToTargetPageByType : function(req,res,type,params){
        var deviceType=1; //默认是pc
-        var deviceAgent = req.headers['user-agent'].toLowerCase();
+        var deviceAgent = req.headers['user-agent'].toString().toLowerCase();
         var agentID = deviceAgent.match(/(iphone|ipod|ipad|android)/);
         if(agentID){
             //指到手机、pad的网页

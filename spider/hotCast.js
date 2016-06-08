@@ -66,6 +66,7 @@ var saveVrData=function(hotCastData,cotegory,callback){
                         syncDate: new Date(),
                     };
                     Dbopt.addOneObj(contentModel,temdata,function(err){
+                        console.log("同步一条数据");
                         dataCount++;
                         cb(err);
                     })
@@ -96,7 +97,7 @@ var getAllPageData=function(channel_id,total_page,cotegory,callback){
                 if (vrdata!==undefined ){
                     //console.log(vrdata.length);
                     saveVrData(vrdata,cotegory,function(err,data){
-                        console.log("同步一条数据");
+
                         cb(err);
                     })
 
