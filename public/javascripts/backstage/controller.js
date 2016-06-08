@@ -563,7 +563,7 @@ doraApp.controller("addContent",['$scope','$http','pageData','getItemService',fu
 
     // 添加新标签
     $scope.addNewTagForm = function(isValid){
-        angularHttpPost($http,isValid,getTargetPostUrl($scope,'contentManage_tag'),$scope.tagFormData,function(data){
+        angularHttpPost($http,isValid,getTargetPostUrl($scope.tagFormData,'contentManage_tag'),$scope.tagFormData,function(data){
             initContentTags($scope,$http);
         });
     }
