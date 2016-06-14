@@ -35,13 +35,14 @@ var ContentSchema = new Schema({
     likeNum : { type: Number, default: 0 }, // 喜欢数
     likeUserIds : String, // 喜欢该文章的用户ID集合
     from : { type: String, default: '1' }, // 来源 1为原创 2为转载
-    source:String, // 来源网站  hotcast  utovr
+    source:String, // 来源网站  hotcast  utovr vrseefile
     foreignKeyId:String , // 网站唯一 id
     uhd_url:String, // 超高清
     hd_url:String, //高清
     sd_url:String, //标清
     syncDate: { type: Date, default: Date.now },
-    isQiniu:{ type: Number, default: 0 }, // 文件是否在七牛服务器  1 同步成功 2 同步失败
+    videoTime:String,
+    isQiniu:{ type: Number, default: 0 }, // 文件是否在七牛服务器  1 同步成功 2 同步失败 3 传输中
 
 
 //    插件信息相关属性

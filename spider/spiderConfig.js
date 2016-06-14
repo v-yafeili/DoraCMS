@@ -128,3 +128,42 @@ exports.vrWorldConfig=[
 //    name: '音乐',
 //    icon: 'http://oss.gevek.com/apk/20150901/ff3/ff3.png?auth_key=1465444102-0-0-2877dc09cd8351bb0f341cf6e6224b5f',
 //    is_home: '1' } ] }
+
+exports.vrSeeFileConfig=[
+    {
+        name:"美女",
+        categoryId:"Bkz3X4KX",
+        hotCastId:1,
+    },
+    {
+        name:"冒险",
+        categoryId:"Bybg4NF7",
+        hotCastId:2,
+    },
+    {
+        name:"游戏",
+        categoryId:"S1DaUSBE",
+        hotCastId:3,
+    },
+    {
+        name:"科技",
+        categoryId:"SkbWEVFX",
+        hotCastId:4,
+    },
+    {
+        name:"旅游",
+        categoryId:"B1S0LSSV",
+        hotCastId:5,
+    },
+    {
+        name:"恐怖",
+        categoryId:"BJu8ISrE",
+        hotCastId:7,
+    },
+    {
+        name:"娱乐",
+        categoryId:"rkTKIrrN",
+        hotCastId:8,
+    }
+
+];

@@ -23,41 +23,55 @@
                     <!--Your browser does not support the video tag.-->
                 <!--</video>-->
 
-                <iframe width="100%" scrolling="no" allowfullscreen height="400px"  frameborder="0"
-                        src="/vrview/index.html?video=<%=documentInfo.hd_url%>&image=examples/video/congo_2048.jpg"></iframe>
-                <!--<div class="valiantPhoto"-->
-                     <!--data-video-src='<%=documentInfo.hd_url%>'-->
-                     <!--style="width: 100%;; height: 400px;">-->
-                    <!--<video  id="videoid"  loop=""-->
-                            <!--style="display: none;" crossOrigin="anonymous"-->
-                            <!--controls=""></video>-->
-                <!--</div>-->
+                <!--<iframe width="100%" scrolling="no" allowfullscreen height="400px"  frameborder="0"-->
+                        <!--src="/vrview/index.html?video=<%=documentInfo.hd_url%>&image=examples/video/congo_2048.jpg"></iframe>-->
+                <!---->
+                <div class="valiantPhoto"
+                     data-video-src='<%=documentInfo.hd_url%>'
+                     style="width: 100%;; height: 400px;">
+                    <video  id="videoid"  loop=""
+                            style="display: none;" crossOrigin="anonymous"
+                            controls=""></video>
+                </div>
                 <p>高清：<%- documentInfo.hd_url%></p>
                 <%} else {%>
                 <!--<video  controls="controls"src="<%=documentInfo.sd_url%>">-->
                     <!--Your browser does not support the video tag.-->
                 <!--</video>-->
-                <iframe width="100%" scrolling="no" allowfullscreen height="400px"  frameborder="0"
-                        src="/vrview/index.html?video=<%=documentInfo.sd_url%>&image=examples/video/congo_2048.jpg"></iframe>
+                <!--<iframe width="100%" scrolling="no" allowfullscreen height="400px"  frameborder="0"-->
+                        <!--src="/vrview/index.html?video=<%=documentInfo.sd_url%>&image=examples/video/congo_2048.jpg"></iframe>-->
 
 
-                <!--<div class="valiantPhoto"-->
-                     <!--data-video-src='<%=documentInfo.sd_url%>'-->
-                     <!--style="width: 100%;; height: 400px;">-->
-                    <!--<video  id="videoid"  loop=""-->
-                            <!--style="display: none;" crossOrigin="anonymous"-->
-                            <!--controls=""></video>-->
-                <!--</div>-->
+                <div class="valiantPhoto"
+                     data-video-src='<%=documentInfo.sd_url%>'
+                     style="width: 100%;; height: 400px;">
+                    <video  id="videoid"  loop=""
+                            style="display: none;" crossOrigin="anonymous"
+                            controls=""></video>
+                </div>
                 <p>标清：<%- documentInfo.sd_url%></p>
                 <%}%>
 
             </div>
 
-            <!--<script type="text/javascript">-->
-                <!--$(document).ready(function() {-->
-                    <!--$('.valiantPhoto').Valiant360();-->
-                <!--});-->
-            <!--</script>-->
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('.valiantPhoto').Valiant360({
+                        crossOrigin: 'anonymous',   // valid keywords: 'anonymous' or 'use-credentials'
+                        clickAndDrag: true,    // use click-and-drag camera controls
+                        flatProjection: true,  // map image to appear flat (often more distorted)
+                        fov: 35,                // initial field of view
+                        fovMin: 3,              // min field of view allowed
+                        fovMax: 100,                // max field of view allowed
+                        hideControls: false,    // hide player controls
+                        lon: 0,                 // initial lon for camera angle
+                        lat: 0,                 // initial lat for camera angle
+                        loop: "false",           // video loops by default
+                        muted: false,            // video muted by default
+                        autoplay: true          // video autoplays by default
+                    });
+                });
+            </script>
             <div class="col-md-2 col-sm-2"></div>
 
         </div>

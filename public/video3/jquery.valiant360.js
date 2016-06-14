@@ -6,7 +6,98 @@
  * @author alteredq / http://alteredqualia.com/
  * @author mr.doob / http://mrdoob.com/
  */
+var formateTime=function(time) {
+    var second = Math.ceil(time);
+    return [second / 3600 | 0, second / 60 % 60 | 0, second % 60 | 0].join(":")
+        .replace(/\b(\d)\b/g, "0$1").replace(/^0{1,2}\:*/, '')
+};
+//mousemove class
+var $dcmen = $(document);
+var mouseMove = function(targetObj, callback) {
+    this.target = targetObj;
+    this.random = (Math.random() * 10000 * 8 | 0).toString(16);
+    this.whenmousedown = null;
+    this.wnenmouseup = null;
+    this.oldPos;
+    this.oldmouse;
+    this.oldLT;
+    this.groupStatus = false;
+    this.callback = callback;
+    this.init();
+};
+$.extend(mouseMove.prototype, {
+    init: function() {
+        var __ = this;
+        this.target.css({
+            'cursor': 'pointer'
+        });
+        this.target.on('mousedown.' + this.random, function(e) {
+            __._mousedown(e);
+            __.oldLT = {
+                left: parseInt(__.target.css('left')),
+                top: parseInt(__.target.css('top')),
+                bottom: parseInt(__.target.css('bottom')),
+                right: parseInt(__.target.css('right')),
+            }
+            if (typeof __.whenmousedown === 'function') {
+                __.whenmousedown()
+            }
+            __.groupStatus = true;
+            $dcmen.on('mousemove.' + __.random, function(e) {
+                //清除选择
+                window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+                if (!__.groupStatus) return;
+                __._mousemove(e);
+            }).on('mouseup.' + __.random, function(e) {
+                __._mouseup();
+            });
+        });
 
+    },
+    _mousedown: function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.groupStatus = true;
+        this.oldmouse = {
+            x: e.clientX,
+            y: e.clientY
+        }
+    },
+    _mousemove: function(e) {
+        var currs = {
+            x: e.clientX,
+            y: e.clientY
+        }
+        var nx = currs.x - this.oldmouse.x;
+        var ny = currs.y - this.oldmouse.y;
+
+        if (typeof this.callback === 'function') {
+            this.callback(nx, ny, this.oldLT);
+        }
+    },
+    _mouseup: function() {
+        var __ = this;
+        __.groupStatus = false;
+        $dcmen.unbind('mousemove.' + __.random);
+        $dcmen.unbind('mouseup.' + __.random);
+        if (typeof __.wnenmouseup === 'function') {
+            __.wnenmouseup()
+        }
+    },
+    mousedown: function(fn) {
+        if (typeof fn === 'function') {
+            this.whenmousedown = fn;
+            return;
+        }
+    },
+    mouseup: function(fn) {
+        if (typeof fn === 'function') {
+            this.wnenmouseup = fn;
+            return;
+        }
+    }
+
+});
 var Detector = {
 
         canvas: !! window.CanvasRenderingContext2D,
@@ -243,10 +334,17 @@ three.js r65 or higher
 
                         // Someday we can have a loading animation for videos
                         var cpct = Math.round(percent * 100);
+                    $('#currtimepanel').text(formateTime(self._video.currentTime));
+                    $('#progress-bar').width(cpct + '%');
+                    $('#progpress-btn').css({
+                        left:cpct + '%'
+                    });
+                    $('#buffer').width(cpct + '%');
+                    //console.log(cpct);
                         if(cpct === 100) {
                             // do something now that we are done
                         } else {
-                            // do something with this percentage info (cpct)
+
                         }
                 });
 
@@ -279,15 +377,30 @@ three.js r65 or higher
 
         // creates div and buttons for onscreen video controls
         createControls: function() {
-
+            var __ = this;
             var muteControl = this.options.muted ? 'fa-volume-off' : 'fa-volume-up';
             var playPauseControl = this.options.autoplay ? 'fa-pause' : 'fa-play';
 
             var controlsHTML = ' \
                 <div class="controls"> \
-                    <a href="#" class="playButton button fa '+ playPauseControl +'"></a> \
+                <div style="width: 30%;float: left" >  \
+                <a href="#" class="playButton button fa '+ playPauseControl +'"></a> \
                     <a href="#" class="muteButton button fa '+ muteControl +'"></a> \
-                    <a href="#" class="fullscreenButton button fa fa-expand"></a> \
+                    </div>\
+                    <div style="float: left;width: 50%;height: 60px;color: #00a65a" class="yvp_prograss_wrap">\
+                    <div class="yvp_progress">\
+                        <span   id="currtimepanel" class="yvp_time_panel yvp_time_panel_curr" node-type="curr-time"></span>\
+                        <span id="totaltimepanel" class="yvp_time_panel yvp_time_panel_total" node-type="total-time"></span>\
+                        <span  id="prog-rail" class="yvp_time_total" node-node="prog-rail">\
+                            <span  id ="buffer"class="yvp_time_loaded" node-type="buffer"></span>\
+                            <span id="progress-bar" class="yvp_time_current" node-type="progress-bar">\
+                            </span>\
+                             <a href="javascript:;"id="progpress-btn" data-align="" class="yvp_time_handle" node-type="progpress-btn"></a>\
+                        </span>\
+                        </div>\
+                   </div>\
+                 <div  style="float: right">\
+                     <a href="#" class="fullscreenButton button fa fa-expand"></a> </div>\
                 </div> \
             ';
 
@@ -300,6 +413,43 @@ three.js r65 or higher
 
             // wire up controller events to dom elements
             this.attachControlEvents();
+            this.addVidoeEvent();
+            var mousemove = new mouseMove( $('#progpress-btn'), function(lx, ly, oldLT) {
+                __._progressBtnControl(lx, ly, oldLT);
+            });
+        },
+        _progressBtnControl: function(lx, ly, oldLT) {
+            var video = this._video;
+            var totalWidth = $('#prog-rail').width();
+            var proBtn = $('#progpress-btn').width();
+            var newLeft = oldLT.left + lx;
+
+            if (newLeft < 0) newLeft = 0;
+            if (newLeft > totalWidth) newLeft = totalWidth;
+            var currtime = newLeft / totalWidth * video.duration;
+
+            //can fast
+            //if(this.params.canfast === false){
+            //    if(currtime > video[0].currentTime) return false;
+            //}
+            console.log("currtime"+currtime);
+            video.currentTime = currtime;
+            console.log("video.currentTime"+video.currentTime);
+            $('#currtimepanel').text(formateTime(this._video.currentTime));
+            var persent = video.currentTime / video.duration;
+            $('#progress-bar').width(persent * 100 + '%');
+            $('#progpress-btn').css({
+                left:persent * 100 + '%'
+            });
+        },
+        addVidoeEvent:function(){
+            var self=this;
+            self._video.addEventListener("loadedmetadata", function() {
+                $('#totaltimepanel').text(formateTime(self._video.duration));
+            });
+            self._video.addEventListener('timeupdate', function() {
+                $('#currtimepanel').text(formateTime(self._video.currentTime));
+            })
         },
 
         attachControlEvents: function() {
@@ -383,8 +533,8 @@ three.js r65 or higher
                 if(this._mouseDown) {
                     x = (e||event).pageX - this._dragStart.x;
                     y = (e||event).pageY - this._dragStart.y;
-                    this._dragStart.x = event.pageX;
-                    this._dragStart.y = event.pageY;
+                    this._dragStart.x = (e||event).pageX;
+                    this._dragStart.y = (e||event).pageY;
                     this._lon += x;
                     this._lat -= y;
                 }
@@ -493,6 +643,7 @@ three.js r65 or higher
         loadVideo: function(videoFile) {
             this._video.src = videoFile;
         },
+
 
         loadPhoto: function(photoFile) {
             this._texture = THREE.ImageUtils.loadTexture( photoFile );

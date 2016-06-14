@@ -74,6 +74,19 @@ var DbOpt = {
            return callback(err,result);
         })
     },
+    findOneAndUpdate:function(obj,parms,callback){
+        obj.findOne(parms, function (err,result) {
+            if(err){
+                return callback(err,result);
+            }else{
+                obj.findByIdAndUpdate(result._id, {$set:{isQiniu:3}},function (err,result) {
+                    return callback(err,result);
+                })
+            }
+
+        })
+
+    },
     updateOneByID : function(obj,req,res,logMsg){
         var params = url.parse(req.url,true);
         var targetId = params.query.uid;
