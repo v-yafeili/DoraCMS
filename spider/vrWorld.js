@@ -1,7 +1,7 @@
 /**
  * Created by v-yaf_000 on 2016/6/8.
  */
-var  superAgent =require('superAgent');
+var  superAgent =require('superagent');
 var async=require("async");
 var  config=require('./spiderConfig').hotCastConfig;
 var vrWordTypeUrl='http://www.gevek.com/api/gameapi/movietype';

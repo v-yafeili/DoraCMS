@@ -2,7 +2,7 @@
  * Created by v-yaf_000 on 2016/5/30.
  */
 
-var  superAgent =require('superAgent');
+var  superAgent =require('superagent');
 var async=require("async");
 var  config=require('./spiderConfig').hotCastConfig;
 var HohCastUrl='http://api2.hotcast.cn/index.php?r=webapi/web/get-list';

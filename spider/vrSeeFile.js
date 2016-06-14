@@ -3,7 +3,7 @@
  */
 // 抓取vr 看片网资源
 
-var  superAgent =require('superAgent');
+var  superAgent =require('superagent');
 var async=require("async");
 var  config=require('./spiderConfig').vrSeeFileConfig;
 var vrlisttUrl='http://vrkanpian.vgeili.cn/Apiv1_Video/list?';

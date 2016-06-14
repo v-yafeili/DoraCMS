@@ -1,7 +1,7 @@
 /**
  * Created by v-yaf_000 on 2016/5/27.
  */
-var  superAgent =require('superAgent');
+var  superAgent =require('superagent');
 
 
 var UtoVRUrl='http://api.utovr.com';

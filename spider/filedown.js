@@ -2,7 +2,7 @@
  * Created by v-yaf_000 on 2016/6/6.
  */
 // 同步图片和视频
-var  request =require('superAgent');
+var  request =require('superagent');
 var fs=require('fs');
 var path=require("path");
 var async=require("async");
