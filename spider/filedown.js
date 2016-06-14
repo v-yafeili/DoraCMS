@@ -50,7 +50,7 @@ var searchConent=function(callback) {
     "$and": [{isQiniu: {$ne: 1}}, {isQiniu: {$ne: 2}},{isQiniu: {$ne: 3}}],
         "$or":[{source:"hotcast"},{"source":"vrseefile"}]
     }, function (err, contentData) {
-        console.log(contentData);
+        //console.log(contentData);
         console.log("开始同步：" + contentData._id);
         var img_url = contentData.sImg;  //http://cdn.hotcast.cn/image%2F20160526%2F5746ba3b700b7%2F750_458_%E8%BF%AA%E5%A3%AB%E5%B0%BC%E9%9F%B3%E4%B9%90%E5%A5%96%E7%BA%A2%E6%AF%AF%E7%A7%80.jpg
         var hd_url = contentData.hd_url;
@@ -69,6 +69,7 @@ var searchConent=function(callback) {
         var localImgName = contentData._id + path.extname(img_url);
         downloadImg(img_url, localImgName, function (err) {
             if (err) {
+                console.log(err);
                 finishFileCount++;
                 contentData.isQiniu = 2;
                 if(finishFileCount>=downFileCount){
@@ -81,6 +82,7 @@ var searchConent=function(callback) {
                 qiniu.upFileToQiNiu(0, localImgName, './temp/' + localImgName, function (err, data) {
                     finishFileCount++;
                     if (err) {
+                        console.log(err);
                         contentData.isQiniu = 2;
                     } else {
                         contentData.isQiniu = (contentData.isQiniu==2)?2:1;
@@ -112,6 +114,7 @@ var searchConent=function(callback) {
                     qiniu.upFileToQiNiu(1, localHdVideoName, './temp/' + localHdVideoName, function (err, data) {
                         finishFileCount++;
                         if (err) {
+                            console.log(err);
                             contentData.isQiniu = 2;
                         } else {
                             contentData.isQiniu = (contentData.isQiniu==2)?2:1;
@@ -129,7 +132,7 @@ var searchConent=function(callback) {
         }
         if (sd_url &&sd_url.length > 0) {
             var localSdVideoName = 'sd_' + contentData._id + path.extname(sd_url);
-            downloadImg(sd_url, localSdVideoName, function () {
+            downloadImg(sd_url, localSdVideoName, function (err) {
                 if (err) {
                     contentData.isQiniu = 2;
                     finishFileCount++;
