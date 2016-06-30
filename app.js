@@ -15,7 +15,7 @@ var io = require('socket.io')();
 var users = require('./routes/users')(io);
 var admin = require('./routes/admin');
 var content = require('./routes/content');
-var apiV1=require('./routes/apiV1');
+var dataAnalyse=require('./routes/dataAnalyse');
 
 //分层路由
 var adminCtrl = require('./routes/adminCtrl');
@@ -152,7 +152,9 @@ app.use('/users', users);
 app.use('/admin', adminCtrl);
 app.use('/admin', admin);
 app.use('/system',system);
-app.use('/api/v1',apiV1);
+//app.use('/api/v1',apiV1);
+app.use('/dataAnalyse',dataAnalyse);
+
 
 
 // catch 404 and forward to error handler

@@ -11,7 +11,9 @@ var vrDataDetial='http://vrkanpian.vgeili.cn/Apiv1_Video/detail?';
 var contentModel=require("../models/Content");
 var categoryModel=require('../models/ContentCategory');
 var Dbopt=require('../models/Dbopt');
-
+var baseFun=require('./baseFun');
+var totalcount=0;
+var synccount=0;
 var VrSeeFileData = function(){
 
 };
@@ -31,7 +33,8 @@ var   httpReqirest=function(url,senddata,callback){
 
 //httpReqirest("","",function(err,data){});
 var saveVrData=function(hotCastData,cotegory,callback){
-
+    //console.log(hotCastData);
+    totalcount++;
     Dbopt.findOneObj(contentModel,{'source':'vrseefile','foreignKeyId':hotCastData.id},function(err,data){
                 if (data)
                 {
@@ -66,6 +69,7 @@ var saveVrData=function(hotCastData,cotegory,callback){
                         syncDate: new Date(),
                     };
                     Dbopt.addOneObj(contentModel,temdata,function(err){
+                        synccount++
                         console.log("同步一条数据");
                         callback(err);
                     })
@@ -113,8 +117,10 @@ VrSeeFileData.prototype={
     getCategories:function(){
 
     },
-    getVideoItem:function(){
+    getVideoItem:function(callback){
         try {
+            totalcount=0;
+            synccount=0;
             var itemcount = 0;
             async.whilst(
                 function () {
@@ -163,7 +169,13 @@ VrSeeFileData.prototype={
                     if (err) {
                         console.log('出错同步VrSeeFileData： ', err);
                     }
-                    console.log("完成同步VrSeeFileData")
+                    else {
+                        console.log("完成同步VrSeeFileData");
+                        baseFun.updateVrData("vrseefile", totalcount, synccount, function (err, data) {
+                            return callback();
+                        })
+                    }
+
 
                 }
             );
@@ -176,5 +188,18 @@ VrSeeFileData.prototype={
     },
 }
 
-var hotcast=new VrSeeFileData();
-hotcast.getVideoItem();
+module.exports=VrSeeFileData;
+//var hotcast=new VrSeeFileData();
+//hotcast.getVideoItem(function(err,data){
+//
+//});
+
+//{ id: '190',
+//    head_img: 'http://7xs0qt.media1.z0.glb.clouddn.com/video/1462781099371.jpg',
+//    view: '4',
+//    content: '在美国胡德河上挑战一次风筝冲浪是来这里旅游观光最推荐的极限运动之一，一只硕大的风筝在空中翱翔，你站在胡德河上的冲浪板上手握风筝线，冲浪板在河面上飞速滑行，激起浪花，时不时还会有另一位挑战者在你身边呼啸而过。你看到的是蓝天白云以及身边胶片般美好的一帧帧画面，别人看到的，是你在胡德河上潇洒扬帆的身影。',
+//    viewtotal: '4',
+//    title: '胡德河的潇洒扬帆',
+//    created: '1463672224',
+//    playtime: '05:36',
+//    downurl: 'http://static.cdn.doubo.tv/utovr/201602261041264462.mp4' }

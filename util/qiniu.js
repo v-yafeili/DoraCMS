@@ -14,6 +14,7 @@ qiniu.conf.UP_HOST = 'http://up-z1.qiniu.com';
 //要上传的空间
 imgBucket = 'img-resource';
 videoBucket = 'vrresource';
+var liveBucket='live';
 
 
 
@@ -25,13 +26,16 @@ function uptoken(bucketName, key) {
 
 
 
-//构造上传函数
+//构造上传函数/*
+/* filetype 0 上传 图片 1 上传视频  2上传直播 */
 function uploadFile( filetype,filename, localFile,callbak) {
     var token="";
     if (filetype==0){
          token =uptoken(imgBucket, filename);
-    }else {
+    }else if (filetype==1){
          token =uptoken(videoBucket, filename);
+    }else if (filetype == 2){
+        token =uptoken(liveBucket, filename);
     }
 
     var extra = new qiniu.io.PutExtra();
@@ -49,8 +53,8 @@ function uploadFile( filetype,filename, localFile,callbak) {
     });
 };
 
-//调用uploadFile上传
-//uploadFile(0,"tsetsetet.jpg",'../spider/temp/test.jpg',function(err,data){
+////调用uploadFile上传
+//uploadFile(2,"tsetsetet.jpg",'../spider/temp/test.jpg',function(err,data){
 //    console.log('finish');
 //})
 

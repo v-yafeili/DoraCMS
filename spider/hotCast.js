@@ -9,6 +9,9 @@ var HohCastUrl='http://api2.hotcast.cn/index.php?r=webapi/web/get-list';
 var contentModel=require("../models/Content");
 var categoryModel=require('../models/ContentCategory');
 var Dbopt=require('../models/Dbopt');
+var baseFun=require('./baseFun');
+var totalcount=0;
+var synccount=0;
 
 var HotCastData = function(){
 
@@ -31,6 +34,7 @@ var saveVrData=function(hotCastData,cotegory,callback){
         function(){return dataCount<hotCastData.length;
         },
         function(cb){
+            totalcount++;
             Dbopt.findOneObj(contentModel,{'source':'hotcast','foreignKeyId':hotCastData[dataCount].vid},function(err,data){
                 if (data)
                 {
@@ -53,10 +57,10 @@ var saveVrData=function(hotCastData,cotegory,callback){
                         author : "HkIiCzVQ", // 文档作者
                         state : true,  // 是否在前台显示，默认显示
                         isTop : 0,  // 是否推荐，默认不推荐 0为不推荐，1为推荐
-                        clickNum : 1,
+                        clickNum : hotCastData[dataCount].show_times,
                         comments : "",
                         commentNum : 0, // 评论数
-                        likeNum : 0, // 喜欢数
+                        likeNum : hotCastData[dataCount].numbers, // 喜欢数
                         from : 2, // 来源 1为原创 2为转载
                         source:"hotcast", // 来源网站  hotcast  utovr
                         foreignKeyId:hotCastData[dataCount].vid , // 网站唯一 id
@@ -66,6 +70,7 @@ var saveVrData=function(hotCastData,cotegory,callback){
                         syncDate: new Date(),
                     };
                     Dbopt.addOneObj(contentModel,temdata,function(err){
+                        synccount++;
                         console.log("同步一条数据");
                         dataCount++;
                         cb(err);
@@ -124,8 +129,10 @@ HotCastData.prototype={
     getCategories:function(){
 
     },
-    getVideoItem:function(){
+    getVideoItem:function(callback){
         try {
+             totalcount=0;
+             synccount=0;
             var itemcount = 0;
             async.whilst(
                 function () {
@@ -172,7 +179,13 @@ HotCastData.prototype={
                     if (err) {
                         console.log('出错同步hotcast： ', err);
                     }
-                    console.log("完成同步hotcast")
+                    else {
+                        console.log("完成同步hotcast");
+                        baseFun.updateVrData("hotcast", totalcount, synccount, function (err, data) {
+                            return callback();
+                        })
+                    }
+
 
                 }
             );
@@ -185,12 +198,34 @@ HotCastData.prototype={
     },
 }
 
-
-var hotcast=new HotCastData();
-hotcast.getVideoItem();
+module.exports=HotCastData;
+//var hotcast=new HotCastData();
+//hotcast.getVideoItem(function(err,data){
+//
+//});
 
 
 //Dbopt.findOneObj(categoryModel,{_id: config[0].categoryId.toString()},function(err,data){
 //    console.log(data);
 //    console.log(err);
 //});
+
+
+// 数据格式
+
+//{ vid: '57636c354e81d',
+//    uhd_url: '',
+//    hd_url: 'http://cdn.hotcast.cn/import%2F20160616%2Fhd%2Fbjnmnstxx20160617.mp4',
+//    sd_url: 'http://cdn.hotcast.cn/import%2F20160616%2Fsd%2Fbjnmnstxx20160617.mp4',
+//    web_url: '',
+//    mp3_url: 'http://cdn.hotcast.cn/import%2F20160616%2Fmp3%2Fbjnmnstxx20160617.mp3',
+//    vname: '比基尼美女沙滩嬉戏',
+//    category: '20160616',
+//    show_times: 772,
+//    created_at: 1466135107,
+//    numbers: 1247,
+//    price: '0',
+//    type: 'vr',
+//    post_url: 'http://cdn.hotcast.cn/image%2F20160617%2F576379aa54a5e%2F750_458_%E6%AF%94%E5%9F%BA%E5%B0%BC%E7%BE%8E%E5%A5%B3%E6%B2%99%E6%BB%A9%E5%AC%89%E6%88%8F.jpg',
+//    total_page: 17 }
+

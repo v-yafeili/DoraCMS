@@ -20,11 +20,30 @@ var settings = require("../models/db/settings");
 var db = mongoose.connect(settings.URL);
 //mongoose.connect('mongodb://'+settings.USERNAME+':'+settings.PASSWORD+'@'+settings.HOST+':'+settings.PORT+'/'+settings.DB+'');
 
+mongoose.connection.on('connected', function () {
+    console.log('Mongoose default connection open to ' + settings.URL);
+});
+
+// If the connection throws an error
+mongoose.connection.on('error',function (err) {
+    console.log('Mongoose default connection error: ' + err);
+});
+
+// When the connection is disconnected
+mongoose.connection.on('disconnected', function () {
+    console.log('Mongoose default connection disconnected');
+});
+
+// If the Node process ends, close the Mongoose connection
+process.on('SIGINT', function() {
+    mongoose.connection.close(function () {
+        console.log('Mongoose default connection disconnected through app termination');
+        process.exit(0);
+    });
+});
 //信息删除操作
 
 var DbOpt = {
-
-
     del : function(obj,req,res,logMsg){
         var params = url.parse(req.url,true);
         var targetId = params.query.uid;
@@ -50,6 +69,11 @@ var DbOpt = {
                 console.log(logMsg+" success!");
                 return res.json(result);
             }
+        })
+    },
+    findAllByParms : function(obj,parms,callback){//查找指定对象所有记录
+        obj.find(parms, function (err,result) {
+            return callback(err,result);
         })
     },
     findOne : function(obj,req,res,logMsg){ //根据ID查找单条记录
@@ -241,17 +265,18 @@ var DbOpt = {
         return datasInfo;
     },
 
-    getApiPaginationResult:function(obj,req,q,filed){// 通用查询，带分页，注意参数传递格式,filed为指定字段
+    getApiPaginationResult:function(obj,req,q,filed,order){// 通用查询，带分页，注意参数传递格式,filed为指定字段
     var page = parseInt(req.query.page);
     var limit = parseInt(req.query.limit);
     if (!page) page = 1;
     if (!limit) limit = 15;
-    var order = req.query.order;
+    //var order = req.query.order;
     var sq = {}, Str, A = 'problemID', B = 'asc';
-    if (order) {    //是否有排序请求
-        Str = order.split('_');
-        A = Str[0]; B = Str[1];
-        sq[A] = B;    //关联数组增加查询条件，更加灵活，因为A是变量
+    if (order||order.length>0) {    //是否有排序请求
+        sq=order;
+        //Str = order.split('_');
+        //A = Str[0]; B = Str[1];
+        //sq[A] = B;    //关联数组增加查询条件，更加灵活，因为A是变量
     } else {
         sq.date = -1;    //默认排序查询条件
     }
@@ -259,7 +284,7 @@ var DbOpt = {
     var startNum = (page - 1)*limit;
     var resultList;
     if(q && q.length > 1){ // 多条件只要其中一条符合
-        resultList = obj.find({'state':true}).and(q,filed).sort(sq).skip(startNum).limit(limit);
+        resultList = obj.find({'state':true}).or(q,filed).sort(sq).skip(startNum).limit(limit);
     }else{
         resultList = obj.find(q,filed).sort(sq).skip(startNum).limit(limit);
     }
