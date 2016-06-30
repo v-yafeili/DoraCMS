@@ -38,7 +38,7 @@
     "validator": "^3.37.0",
     "cheerio": "^0.20.0",
     "jsonwebtoken": "^5.7.0",
-    "undersorce": "^1.8.3",
+    "underscore": "^1.8.3",
     "node-schedule": "^1.1.1",
     "qiniu": "^6.1.11"
   }
