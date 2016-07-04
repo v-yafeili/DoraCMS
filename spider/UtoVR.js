@@ -149,7 +149,7 @@ UtoVRData.prototype={
                         function (n, waterCb) {
                             // 获取第一页数据
                             //opt=down&id=0&cate_id=2&size=12
-                            var searchdata='param={"id":'+config[itemcount].hotCastId+',"index":1,"size":500}';
+                            var searchdata='param={"id":'+config[itemcount].hotCastId+',"index":1,"size":5000}';
                             httpReqirest(vrlisttUrl, searchdata, function (err, vrdata) {
                                 //console.log(vrdata);
                                 if (vrdata !== undefined && vrdata.Data.Items.length > 0) {

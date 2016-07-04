@@ -131,7 +131,10 @@ VrSanMonData.prototype={
                         function (n, waterCb) {
                             // 获取第一页数据
                             //1/15/4?categoryId=27&order=1
-                            var pagelsit=[1,2,3,4,5,6,7,8,9];
+                            var pagelsit=[];
+                            for(var i=0;i<21;i++){
+                                pagelsit.push(i);
+                            }
                             async.eachSeries(pagelsit, function(item, callback) {
                                 var searchdata=item+"/15/"+config[itemcount].classifyId+"?categoryId="+
                                     config[itemcount].hotCastId+"&order=1";

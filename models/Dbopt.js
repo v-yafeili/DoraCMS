@@ -103,9 +103,13 @@ var DbOpt = {
             if(err){
                 return callback(err,result);
             }else{
-                obj.findByIdAndUpdate(result._id, {$set:{isQiniu:3}},function (err,result) {
+                if(result) {
+                    obj.findByIdAndUpdate(result._id, {$set: {isQiniu: 3}}, function (err, result) {
+                        return callback(err, result);
+                    })
+                }else{
                     return callback(err,result);
-                })
+                }
             }
 
         })
@@ -242,9 +246,11 @@ var DbOpt = {
         var startNum = (page - 1)*limit;
         var resultList;
         var resultNum;
+        console.log(q);
+        q.isQiniu=1;
         if(q && q.length > 1){ // 多条件只要其中一条符合
-            resultList = obj.find({'state':true}).or(q,filed).sort(sq).skip(startNum).limit(limit);
-            resultNum = obj.find({'state':true}).or(q,filed).count();
+            resultList = obj.find({'state':true,"isQiniu":1}).and(q,filed).sort(sq).skip(startNum).limit(limit);
+            resultNum = obj.find({'state':true,"isQiniu":1}).and(q,filed).count();
         }else{
             resultList = obj.find(q,filed).sort(sq).skip(startNum).limit(limit);
             resultNum = obj.find(q,filed).count();

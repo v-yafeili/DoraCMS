@@ -126,7 +126,10 @@ Vr720YunData.prototype={
                         function (n, waterCb) {
                             // 获取第一页数据
                             //opt=down&id=0&cate_id=2&size=12
-                            var pagelsit=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+                            var pagelsit=[];
+                            for(var i=0;i<21;i++){
+                                pagelsit.push(i);
+                            }
                             async.eachSeries(pagelsit, function(item, callback) {
                                 var searchdata='';
                                 var url='http://api.720yun.com/api/video/list/'+item+'?is_selected=1';

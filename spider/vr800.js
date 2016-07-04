@@ -155,7 +155,11 @@ Vr800.prototype={
                         },
                         function (n, waterCb) {
                             // 获取第一页数据
-                            var pagelsit=[0,1,2,3,4,5,6,7,8,9,10];
+                            var pagelsit=[];
+                            for(var i=0;i<21;i++){
+                                pagelsit.push(i);
+                            }
+                            //var pagelsit=[0,1,2,3,4,5,6,7,8,9,10,];
                             async.eachSeries(pagelsit, function(item, callback) {
                                 //channelId=2&page=20
                                 var searchdata="channelId="+ config[itemcount].hotCastId+"&page="+item;

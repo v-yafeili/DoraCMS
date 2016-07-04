@@ -35,7 +35,7 @@ var ContentSchema = new Schema({
     likeNum : { type: Number, default: 0 }, // 喜欢数
     likeUserIds : String, // 喜欢该文章的用户ID集合
     from : { type: String, default: '1' }, // 来源 1为原创 2为转载
-    source:String, // 来源网站  hotcast  utovr vrseefile baofengvr 720yun  vrtimes  sanmon vr800
+    source:String, // 来源网站  hotcast  utovr vrseefile baofengvr 720yun  vrtimes  sanmon vr800 qihuanyun
     foreignKeyId:String , // 网站唯一 id
     uhd_url:String, // 超高清
     hd_url:String, //高清
@@ -43,6 +43,7 @@ var ContentSchema = new Schema({
     syncDate: { type: Date, default: Date.now },
     videoTime:String,
     videoScore:String,
+    hd_fileSize:String,
     isQiniu:{ type: Number, default: 0 }, // 文件是否在七牛服务器  1 同步成功 2 同步失败 3 传输中
 
 

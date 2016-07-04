@@ -156,7 +156,10 @@ VrTimesData.prototype={
                         function (n, waterCb) {
                             // 获取第一页数据
                             //act=list&classid=1&page=1
-                            var pagelsit=[1,2,3,4,5,7,8,9,10];
+                            var pagelsit=[];
+                            for(var i=0;i<21;i++){
+                                pagelsit.push(i);
+                            }
                             async.eachSeries(pagelsit, function(item, callback) {
                                 var searchdata="act=list&classid="+config[itemcount].hotCastId+"&page="+item;
                                 httpReqirest(vrlisttUrl+searchdata, "", function (err, vrdata) {

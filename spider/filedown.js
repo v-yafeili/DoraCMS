@@ -46,10 +46,14 @@ var saveSyncData=function(data,callback){
 
 }
 var searchConent=function(callback) {
+    //{source:"hotcast"},{"source":"vrseefile"},{"source":"utovr"}{isQiniu: {$ne: 3}}
     Dbopt.findOneAndUpdate(contentModel, {
-    "$and": [{isQiniu: {$ne: 1}}, {isQiniu: {$ne: 2}},{isQiniu: {$ne: 3}}],
-        "$or":[{source:"hotcast"},{"source":"vrseefile"}]
+    "$and": [{isQiniu: {$ne: 1}}, {isQiniu: {$ne: 2}}],
+        "$or":[{source:"hotcast"},{"source":"vrseefile"},{"source":"utovr"}]
     }, function (err, contentData) {
+        if(err||!contentData){
+            return callback(err);
+        }
         //console.log(contentData);
         console.log("开始同步：" + contentData._id);
         var img_url = contentData.sImg;  //http://cdn.hotcast.cn/image%2F20160526%2F5746ba3b700b7%2F750_458_%E8%BF%AA%E5%A3%AB%E5%B0%BC%E9%9F%B3%E4%B9%90%E5%A5%96%E7%BA%A2%E6%AF%AF%E7%A7%80.jpg

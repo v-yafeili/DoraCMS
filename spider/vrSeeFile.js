@@ -140,7 +140,7 @@ VrSeeFileData.prototype={
                         function (n, waterCb) {
                             // 获取第一页数据
                             //opt=down&id=0&cate_id=2&size=12
-                            var searchdata={opt:'down',id:0,cate_id:config[itemcount].hotCastId,size:100}
+                            var searchdata={opt:'down',id:0,cate_id:config[itemcount].hotCastId,size:1000}
                             httpReqirest(vrlisttUrl, searchdata, function (err, vrdata) {
                                 //console.log(vrdata.length);
                                 if (vrdata !== undefined && vrdata.data.length > 0) {
