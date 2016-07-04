@@ -249,8 +249,8 @@ var DbOpt = {
         console.log(q);
         q.isQiniu=1;
         if(q && q.length > 1){ // 多条件只要其中一条符合
-            resultList = obj.find({'state':true,"isQiniu":1}).and(q,filed).sort(sq).skip(startNum).limit(limit);
-            resultNum = obj.find({'state':true,"isQiniu":1}).and(q,filed).count();
+            resultList = obj.find({'state':true,"isQiniu":1}).or(q,filed).sort(sq).skip(startNum).limit(limit);
+            resultNum = obj.find({'state':true,"isQiniu":1}).or(q,filed).count();
         }else{
             resultList = obj.find(q,filed).sort(sq).skip(startNum).limit(limit);
             resultNum = obj.find(q,filed).count();

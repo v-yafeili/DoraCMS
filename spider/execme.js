@@ -17,7 +17,7 @@ var vrTimes=require('./vrTimes');
 var execlist=[vr720yun,hotcast,utovr,vr800,vrBaoFeng,vrSanmon,vrSanmon,vrSeeFile,vrTimes];
 
 rule.dayOfWeek = [0, new schedule.Range(1, 6)];
-rule.hour = 9;
+rule.hour = 5;
 rule.minute = 0;
 
 var j = schedule.scheduleJob(rule, function(){
