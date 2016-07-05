@@ -90,12 +90,24 @@ router.get('/app/:forder/:defaultUrl', function (req, res, next) {
 
 router.get('/getxml/:vrId', function(req, res, next) {
     getxmlText();
-    console.log(req.params.vrId);
+    //console.log(req.params.vrId);
     var  vrid=req.params.vrId;
-    var videourl="http://7xlp0e.com1.z0.glb.clouddn.com/therelaxatron2.mp4";
-    var imgurl="http://7xlp0e.com1.z0.glb.clouddn.com/5615ce19193184140355c49f.png";
-    var returninfo=  util.format(xmltxt.toString(), videourl, imgurl, videourl,imgurl+"?vid="+vrid);
-    res.send(returninfo);
+    Content.findOne({ '_id': vrid , 'state' : true}).exec(function(err,result){
+        if (err||!result) {
+            //console.log(err)
+            res.send(err);
+        } else {
+            var hdvideourl=result.hd_url||result.sd_url;
+            var sdvideourl=result.sd_url||result.hd_url;
+            var imgurl=result.sImg;
+            //var videourl="http://7xlp0e.com1.z0.glb.clouddn.com/therelaxatron2.mp4";
+            //var imgurl="http://7xlp0e.com1.z0.glb.clouddn.com/5615ce19193184140355c49f.png";
+            var returninfo=  util.format(xmltxt.toString(), sdvideourl, imgurl, hdvideourl,imgurl+"?vid="+vrid);
+            res.send(returninfo);
+        }
+    });
+
+
 });
 /* GET home page. */
 router.get('/', function (req, res, next) {
