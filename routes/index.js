@@ -1,4 +1,7 @@
 var express = require('express');
+var fs = require('fs');
+var util = require('util');
+
 var router = express.Router();
 
 //数据库操作对象
