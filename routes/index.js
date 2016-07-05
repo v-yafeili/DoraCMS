@@ -21,6 +21,14 @@ var url = require('url');
 var cache = require('../util/cache');
 
 
+var xmltxt='';
+var getxmlText=function(){
+    if(xmltxt==''){
+        xmltxt= fs.readFileSync('./routes/videopano.xml','utf-8');
+    }
+    return xmltxt;
+}
+
 //==============================手机端接口==========================================================
 router.get('/app', function (req, res, next) {
     siteFunc.renderToTargetPageByType(req,res,'app');
@@ -77,12 +85,22 @@ router.get('/app/:forder/:defaultUrl', function (req, res, next) {
 });
 //==================================================================================================
 
+router.get('/getxml/:vrId', function(req, res, next) {
+    getxmlText();
+    console.log(req.params.vrId);
+    var  vrid=req.params.vrId;
+    var videourl="http://7xlp0e.com1.z0.glb.clouddn.com/therelaxatron2.mp4";
+    var imgurl="http://7xlp0e.com1.z0.glb.clouddn.com/5615ce19193184140355c49f.png";
+    var returninfo=  util.format(xmltxt.toString(), videourl, imgurl, videourl,imgurl+"?vid="+vrid);
+    res.send(returninfo);
+});
 /* GET home page. */
 router.get('/', function (req, res, next) {
 
     siteFunc.renderToTargetPageByType(req,res,'index');
 
 });
+
 
 router.get('/test', function (req, res, next) {
 
