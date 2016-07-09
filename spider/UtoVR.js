@@ -21,8 +21,12 @@ var   httpReqirest=function(url,senddata,callback){
         .set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
         .send(senddata)
         .end(function(err,res){
-            var  jsonData=JSON.parse(res.text);
-            return callback(err,jsonData);
+            if(res) {
+                var jsonData = JSON.parse(res.text);
+                return callback(err, jsonData);
+            }else{
+                return callback(err, null);
+            }
             //console.log(jsonData[0]);
         })
 };

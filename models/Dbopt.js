@@ -289,12 +289,12 @@ var DbOpt = {
 
     var startNum = (page - 1)*limit;
     var resultList;
+        q.isQiniu=1;
     if(q && q.length > 1){ // 多条件只要其中一条符合
-        resultList = obj.find({'state':true}).or(q,filed).sort(sq).skip(startNum).limit(limit);
+        resultList = obj.find({'state':true,isQiniu:1}).or(q,filed).sort(sq).skip(startNum).limit(limit);
     }else{
         resultList = obj.find(q,filed).sort(sq).skip(startNum).limit(limit);
     }
-
     return resultList;
 },
 

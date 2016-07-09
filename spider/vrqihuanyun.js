@@ -218,10 +218,10 @@ vrQiHuanYunData.prototype={
 module.exports=vrQiHuanYunData;
 //========================= test =======================
 //console.log(decodeURI('%E6%B6%88%E5%A4%B1%E7%9A%84%E9%BB%91%E5%A4%9C'));
-var hotcast=new vrQiHuanYunData();
-hotcast.getVideoItem(function(err,data){
-
-});
+//var hotcast=new vrQiHuanYunData();
+//hotcast.getVideoItem(function(err,data){
+//
+//});
 //baseFun.httpGetReq(vrDataDetial,{},"",function(err,data){
 //    console.log(data);
 //})

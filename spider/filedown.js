@@ -59,6 +59,7 @@ var searchConent=function(callback) {
         var img_url = contentData.sImg;  //http://cdn.hotcast.cn/image%2F20160526%2F5746ba3b700b7%2F750_458_%E8%BF%AA%E5%A3%AB%E5%B0%BC%E9%9F%B3%E4%B9%90%E5%A5%96%E7%BA%A2%E6%AF%AF%E7%A7%80.jpg
         var hd_url = contentData.hd_url;
         var sd_url = contentData.sd_url;
+        var ori_url=[];
         var downFileCount = 0;
         var finishFileCount = 0;
         if (img_url.length > 0) {
@@ -77,6 +78,7 @@ var searchConent=function(callback) {
                 finishFileCount++;
                 contentData.isQiniu = 2;
                 if(finishFileCount>=downFileCount){
+                    contentData.ori_url=ori_url;
                     saveSyncData(contentData,function(err,data){
                         return callback();
                     })
@@ -90,10 +92,12 @@ var searchConent=function(callback) {
                         contentData.isQiniu = 2;
                     } else {
                         contentData.isQiniu = (contentData.isQiniu==2)?2:1;
+                        ori_url.push(contentData.sImg);
                         contentData.sImg=qiNiuImgUrl+localImgName;
                         console.log(contentData._id + "img up finish");
                     }
                     if(finishFileCount>=downFileCount){
+                        contentData.ori_url=ori_url;
                         saveSyncData(contentData,function(err,data){
                             return callback();
                         })
@@ -109,6 +113,7 @@ var searchConent=function(callback) {
                     contentData.isQiniu = 2;
                     finishFileCount++;
                     if(finishFileCount>=downFileCount){
+                        contentData.ori_url=ori_url;
                         saveSyncData(contentData,function(err,data){
                             return callback();
                         })
@@ -122,10 +127,12 @@ var searchConent=function(callback) {
                             contentData.isQiniu = 2;
                         } else {
                             contentData.isQiniu = (contentData.isQiniu==2)?2:1;
+                            ori_url.push(contentData.hd_url);
                             contentData.hd_url=qiNiuVideoUrl+localHdVideoName;
                             console.log(contentData._id + " hd up finish");
                         }
                         if(finishFileCount>=downFileCount){
+                            contentData.ori_url=ori_url;
                             saveSyncData(contentData,function(err,data){
                                 return callback();
                             })
@@ -141,6 +148,7 @@ var searchConent=function(callback) {
                     contentData.isQiniu = 2;
                     finishFileCount++;
                     if(finishFileCount>=downFileCount){
+                        contentData.ori_url=ori_url;
                         saveSyncData(contentData,function(err,data){
                             return callback();
                         })
@@ -153,10 +161,12 @@ var searchConent=function(callback) {
                             contentData.isQiniu = 2;
                         } else {
                             contentData.isQiniu = (contentData.isQiniu==2)?2:1;
+                            ori_url.push(contentData.sd_url);
                             contentData.sd_url=qiNiuVideoUrl+localSdVideoName;
                             console.log(contentData._id + " sd up finish");
                         }
                         if(finishFileCount>=downFileCount){
+                            contentData.ori_url=ori_url;
                             saveSyncData(contentData,function(err,data){
                                 return callback();
                             })

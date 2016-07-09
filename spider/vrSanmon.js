@@ -21,6 +21,8 @@ var VrSanMonData = function(){
 var   httpReqirest=function(url,senddata,callback){
     superAgent
         .get(url)
+        .set('deviceTyp', 'ANDROID')
+        .set('version', 'v3.0')
         .set("userId","378CFA7EE67BA032AA79778735BCF395")
         .set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
         .query(senddata)
@@ -141,7 +143,7 @@ VrSanMonData.prototype={
                                 console.log(vrlisttUrl+searchdata);
                                 httpReqirest(vrlisttUrl+searchdata, "", function (err, vrdata) {
                                     //console.log(vrdata.content.list);
-                                    if (vrdata !== undefined && vrdata.content.list.length > 0) {
+                                    if (vrdata !== undefined &&vrdata.content &&vrdata.content.list && vrdata.content.list.length > 0) {
                                         // console.log(vrdata);
                                         getVrDetialData(vrdata.content.list, n, function (err) {
                                             callback(err);
@@ -190,7 +192,7 @@ VrSanMonData.prototype={
 
 
 module.exports=VrSanMonData;
-//var hotcast=new VrSanMonData();
+var hotcast=new VrSanMonData();
 //hotcast.getVideoItem(function(err,data){
 //
 //});
