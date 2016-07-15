@@ -15,7 +15,7 @@ var vrSeeFile=require('./vrSeeFile');
 var vrTimes=require('./vrTimes');
 var vrQihuanyun=require('./vrqihuanyun');
 
-var execlist=[vr720yun,hotcast,utovr,vr800,vrBaoFeng,vrSanmon,vrSanmon,vrSeeFile,vrTimes,vrQihuanyun];
+var execlist=[vr720yun,vrBaoFeng,vrSanmon,vrSanmon,vrSeeFile,vrQihuanyun,hotcast,vr800,utovr,vrTimes];
 
 rule.dayOfWeek = [0, new schedule.Range(1, 6)];
 rule.hour = 5;

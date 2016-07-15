@@ -215,10 +215,10 @@ VrTimesData.prototype={
 
 
 module.exports=VrTimesData;
-var hotcast=new VrTimesData();
-hotcast.getVideoItem(function(err,data){
-
-});
+//var hotcast=new VrTimesData();
+//hotcast.getVideoItem(function(err,data){
+//
+//});
 
 
 

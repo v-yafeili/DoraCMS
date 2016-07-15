@@ -49,7 +49,7 @@ exports.getContentByCategory=function(req,res){
         return res.json(new apiDataModel(0,"参数错误"));
     }
     var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url hd_url sd_url videoTime';
-    var category={"isTop":categoryid};
+    var category={"category":categoryid};
     var query=DbOpt.getApiPaginationResult(ContentModel,req,searchinfo,filed,"");
     query.exec(function(err,data){
         if(err){

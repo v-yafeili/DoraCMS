@@ -97,7 +97,7 @@ var getVrDetialData=function(vrdatalist,cotegory,callback){
             var senddata='param={"id":'+ vrdatalist[pagecount].Item1 +'}';
             httpReqirest(vrDataDetial,senddata,function(err,vrdata){
                 //console.log(vrdata.length);
-                if (vrdata!==undefined&&vrdata.Data!==undefined ){
+                if (vrdata&&vrdata.Data ){
                     //console.log(vrdata.data);
                     saveVrData( vrdatalist[pagecount],vrdata.Data,cotegory,function(err,data){
                         pagecount++;
@@ -106,7 +106,7 @@ var getVrDetialData=function(vrdatalist,cotegory,callback){
 
                 }
                 else {
-                    pagecount=total_page+1;
+                    pagecount++;
                     cb(err);
                 }
             });

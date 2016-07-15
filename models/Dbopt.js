@@ -286,13 +286,13 @@ var DbOpt = {
     } else {
         sq.date = -1;    //默认排序查询条件
     }
-
     var startNum = (page - 1)*limit;
     var resultList;
-        q.isQiniu=1;
     if(q && q.length > 1){ // 多条件只要其中一条符合
+        q.isQiniu=1;
         resultList = obj.find({'state':true,isQiniu:1}).or(q,filed).sort(sq).skip(startNum).limit(limit);
     }else{
+        q.isQiniu=1;
         resultList = obj.find(q,filed).sort(sq).skip(startNum).limit(limit);
     }
     return resultList;
