@@ -49,7 +49,14 @@ var searchConent=function(callback) {
     //{source:"hotcast"},{"source":"vrseefile"},{"source":"utovr"}{isQiniu: {$ne: 3}}
     Dbopt.findOneAndUpdate(contentModel, {
     "$and": [{isQiniu: {$ne: 1}}, {isQiniu: {$ne: 2}}],
-        "$or":[{source:"hotcast"},{"source":"vrseefile"},{"source":"utovr"}]
+        "$or":[{source:"hotcast"},{"source":"vrseefile"},
+            {"source":"vr720yun"},
+            {"source":"vr800"},
+            {"source":"VrBaoFeng"},
+            {"source":"vrSanmon"},
+            {"source":"vrTimes"},
+            {"source":"vrqihuanyun"},
+            {"source":"utovr"}]
     }, function (err, contentData) {
         if(err||!contentData){
             return callback(err);

@@ -56,7 +56,6 @@ exports.getContentByCategory=function(req,res){
             return res.json(new ApiDataModel(0,"查询出错"+err,""));
         }
         else {
-
             return res.json(new ApiDataModel(1,"",data));
         }
     })
