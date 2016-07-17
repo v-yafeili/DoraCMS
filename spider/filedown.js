@@ -48,7 +48,7 @@ var saveSyncData=function(data,callback){
 var searchConent=function(callback) {
     //{source:"hotcast"},{"source":"vrseefile"},{"source":"utovr"}{isQiniu: {$ne: 3}}
     Dbopt.findOneAndUpdate(contentModel, {
-    "$and": [{isQiniu: {$ne: 1}}, {isQiniu: {$ne: 2}}],
+    "$and": [{isQiniu: {$ne: 1}}, {isQiniu: {$ne: 2}},{isQiniu: {$ne: 3}}],
         "$or":[{source:"hotcast"},{"source":"vrseefile"},
             {"source":"vr720yun"},
             {"source":"vr800"},
