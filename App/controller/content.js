@@ -7,6 +7,7 @@ var ApiDataModel=require('../../util/apiDataModel');
 var DbSiteFunc=require('../../models/db/siteFunc');
 var  DbOpt = require("../../models/Dbopt");
 var ContentModel=require("../../models/Content");
+var url=require('url');
 var  serverDate={
     // 获取顶部推荐数据
     getTopData:function(req,filed,callback){
@@ -84,9 +85,9 @@ exports.getMainPageDate=function(req,res){
 
 // 模糊搜索vr
 exports.searchResult=function(req, res){
-   // var params = url.parse(req.url,true);
-    var searchKey = req.query.searchKey;
-    var area = req.query.area;
+    var params = url.parse(req.url,true);
+    var searchKey = params.query.searchKey;
+    var area = params.query.area;
 
     var keyPr = [];
     var reKey = new RegExp(searchKey, 'i');
