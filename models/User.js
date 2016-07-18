@@ -29,6 +29,8 @@ var UserSchema = new Schema({
     city : String, // 所在城市
     year : Number, // 出生年
     openid : String,   // 针对qq互联
+    token : String,   // 登录token
+    logintime : Date,   // 登录时间
     retrieve_time : {type: Number} // 用户发送激活请求的时间
 
 });

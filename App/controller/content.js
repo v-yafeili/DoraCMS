@@ -50,7 +50,7 @@ exports.getContentByCategory=function(req,res){
     }
     var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url hd_url sd_url videoTime';
     var category={"category":categoryid};
-    var query=DbOpt.getApiPaginationResult(ContentModel,req,searchinfo,filed,"");
+    var query=DbOpt.getApiPaginationResult(ContentModel,req,category,filed,"");
     query.exec(function(err,data){
         if(err){
             return res.json(new ApiDataModel(0,"查询出错"+err,""));
@@ -81,3 +81,41 @@ exports.getMainPageDate=function(req,res){
     })
 }
 
+
+// 模糊搜索vr
+exports.searchResult=function(req, res){
+   // var params = url.parse(req.url,true);
+    var searchKey = req.query.searchKey;
+    var area = req.query.area;
+
+    var keyPr = [];
+    var reKey = new RegExp(searchKey, 'i');
+//    模糊查询名称和内容
+    if(area === "tags"){
+        keyPr = {'tags' : { $regex: reKey } };
+    }else{
+        keyPr = [];
+        keyPr.push({'comments' : { $regex: reKey } });
+        keyPr.push({'tags' : { $regex: reKey } });
+        keyPr.push({'title' : { $regex: reKey } })
+    }
+
+    var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url hd_url sd_url videoTime';
+    var query=DbOpt.getApiPaginationResult(ContentModel,req,keyPr,filed,"");
+    query.exec(function(err,data){
+        if(err){
+            return res.json(new ApiDataModel(0,"查询出错"+err,""));
+        }
+        else {
+            return res.json(new ApiDataModel(1,"",data));
+        }
+    })
+}
+exports.getMyFavoritVr=function(req, res){
+}
+exports.putFavorVr=function(req, res){
+
+}
+exports.delFavorrVr=function(req, res){
+
+}

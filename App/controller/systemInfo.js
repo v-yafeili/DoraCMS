@@ -10,17 +10,18 @@ var addtestsmscode=require('../common/sendsmscode').addsmscode;
 
 var mobileVerify = /^1\d{10}$/;
 var resendTimeout = 60;
-var serverFun={
-     sendSmsResponse : function( error, response,callback){
-        if(error || response.statusCode != 200){
-            return callback("Error occured in sending sms: " + error);
-        }
+var  sendSmsResponse = function( error, response,callback){
+    if(error || response.statusCode != 200){
+        return callback("Error occured in sending sms: " + error);
+    }
 
-        // get back to user
-        return callback(null,"Error occured in sending sms: " + error);
-    },
-    getCodebyMolile:function(mobile,callback){
-        DbOpt.findOneObj(smsVerifyCode,{mobile:mobile},function(err,instace)
+    // get back to user
+    return callback(null,"Error occured in sending sms: " + error);
+}
+var serverFun={
+
+    getCodebyMolile:function(mobilenumber,callback){
+        DbOpt.findOneObj(smsVerifyCode,{mobile:mobilenumber},function(err,instace)
             {
                 if(err)
                 {
@@ -40,7 +41,7 @@ var serverFun={
                                 addtestsmscode(mobilenumber,callback)
                             }else{
                                 smscodemodule(mobilenumber,function(err,response){
-                                    return  this.sendSmsResponse(err,response,callback);
+                                    return  sendSmsResponse(err,response,callback);
                                 });}
                         });
                     }
@@ -52,7 +53,7 @@ var serverFun={
                         addtestsmscode(mobilenumber,callback)
                     }else{
                         smscodemodule(mobilenumber, function(error, response){
-                            return   this.sendSmsResponse( error, response,callback);
+                            return   sendSmsResponse( error, response,callback);
                         });}
                 }
 
