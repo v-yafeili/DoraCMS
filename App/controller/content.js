@@ -7,6 +7,7 @@ var ApiDataModel=require('../../util/apiDataModel');
 var DbSiteFunc=require('../../models/db/siteFunc');
 var  DbOpt = require("../../models/Dbopt");
 var ContentModel=require("../../models/Content");
+var FavoriteContent=require('../../models/UserFavoriteContent');
 var url=require('url');
 var  serverDate={
     // 获取顶部推荐数据
@@ -112,10 +113,45 @@ exports.searchResult=function(req, res){
         }
     })
 }
+var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url hd_url sd_url videoTime';
 exports.getMyFavoritVr=function(req, res){
+    var  msid=req.query._msid;
+    FavoriteContent.find({msid:msid})
+        .populate("contentId",filed)
+        .exec(function(err,data){
+            if(err){
+                return res.json(new ApiDataModel(0,"查询出错"+err,""));
+            }
+            else{
+                console.log(data);
+                var returnmodel=[];
+                data.forEach(function(r,index){
+                    returnmodel.push(r.contentId)
+                })
+                return res.json(new ApiDataModel(1,"",returnmodel));
+            }
+        })
+
 }
 exports.putFavorVr=function(req, res){
-
+    var  msid=req.query._msid;
+    var  contentId=req.query.contentId;
+    DbOpt.findOneObj(FavoriteContent,{'msid':msid,'contentId':contentId},function(err,data){
+        if(err){
+            return res.json(new ApiDataModel(0,"收藏出错"+err,""));
+        }
+        if(data){
+            return res.json(new ApiDataModel(1,"",""));
+        }else{
+            DbOpt.addOneObj(FavoriteContent,{'msid':msid,'contentId':contentId,date:new Date()},function(err){
+                if(err){
+                    return res.json(new ApiDataModel(0,"收藏出错"+err,""));
+                }else{
+                    return res.json(new ApiDataModel(1,"",""));
+                }
+            })
+        }
+    })
 }
 exports.delFavorrVr=function(req, res){
 

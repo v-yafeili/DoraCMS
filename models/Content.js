@@ -46,6 +46,10 @@ var ContentSchema = new Schema({
     hd_fileSize:String,
     ori_url:[String],
     isQiniu:{ type: Number, default: 0 }, // 文件是否在七牛服务器  1 同步成功 2 同步失败 3 传输中
+    duration:Number,
+    size:Number,
+    bit_rate:Number,
+
 
 
 //    插件信息相关属性

@@ -25,9 +25,9 @@ router.get('/searchVr',contentApi.searchResult);
 
 
 // 获取我喜欢的视频
-router.get("/userinfo/favoritevr",ensureAuthorizedController.ensureAuthorized,contentApi.getMyFavoritVr);
+router.get("/userinfo/favoritevr",contentApi.getMyFavoritVr);
 // 添加我喜欢的视频
-router.put('/userinfo/favoritevr/:id', ensureAuthorizedController.ensureAuthorized,contentApi.putFavorVr);
+router.put('/userinfo/favoritevr',contentApi.putFavorVr);
 // 删除我喜欢的视频
 router.delete('/userinfo/favoritevr/:id',ensureAuthorizedController.ensureAuthorized, contentApi.delFavorrVr);
 

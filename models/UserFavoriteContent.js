@@ -14,6 +14,7 @@ var FavoriteContentSchema = new Schema({
         'default': shortid.generate
     },
     userId : { type : String , ref : 'User'},
+    msid:String,
     contentId : { type : String , ref : 'Content'},
     date: { type: Date, default: Date.now },
 
