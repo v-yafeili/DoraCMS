@@ -126,7 +126,9 @@ exports.getMyFavoritVr=function(req, res){
                 console.log(data);
                 var returnmodel=[];
                 data.forEach(function(r,index){
-                    returnmodel.push(r.contentId)
+                    if(r.contentId) {
+                        returnmodel.push(r.contentId)
+                    }
                 })
                 return res.json(new ApiDataModel(1,"",returnmodel));
             }
