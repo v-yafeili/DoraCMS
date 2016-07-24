@@ -51,7 +51,7 @@ var searchConent=function(callback) {
     "$and": [{isQiniu: {$ne: 1}}, {isQiniu: {$ne: 2}},{isQiniu: {$ne: 3}}],
         "$or":[{source:"hotcast"},{"source":"vrseefile"},
             {"source":"vr720yun"},
-            {"source":"vr800"},
+          //  {"source":"vr800"},
             {"source":"VrBaoFeng"},
             {"source":"vrSanmon"},
             {"source":"vrTimes"},
