@@ -24,7 +24,9 @@ var  serverDate={
             return callback(err,returndata);
         })
     }
-}
+};
+var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url' +
+    ' hd_url sd_url videoTime source';
 //获取所有分类
 exports.getAllVrCategory=function(req,res){
     var data=  DbSiteFunc.getCategoryList();
@@ -50,8 +52,11 @@ exports.getContentByCategory=function(req,res){
     if(categoryid===undefined){
         return res.json(new apiDataModel(0,"参数错误"));
     }
-    var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url hd_url sd_url videoTime';
+    //var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url hd_url sd_url videoTime';
     var category={"category":categoryid};
+    if(categoryid==1){
+        category={"isTop":1};
+    }
     var query=DbOpt.getApiPaginationResult(ContentModel,req,category,filed,"");
     query.exec(function(err,data){
         if(err){
@@ -64,7 +69,7 @@ exports.getContentByCategory=function(req,res){
 };
 // app 主页数据
 exports.getMainPageDate=function(req,res){
-    var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url hd_url sd_url videoTime';
+    //var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url hd_url sd_url videoTime';
     var searchinfo={"isTop":false};
     var query=DbOpt.getApiPaginationResult(ContentModel,req,searchinfo,filed,"");
     query.exec(function(err,data){
@@ -102,7 +107,7 @@ exports.searchResult=function(req, res){
         keyPr.push({'title' : { $regex: reKey } })
     }
 
-    var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url hd_url sd_url videoTime';
+   // var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url hd_url sd_url videoTime';
     var query=DbOpt.getApiPaginationResult(ContentModel,req,keyPr,filed,"");
     query.exec(function(err,data){
         if(err){
@@ -113,7 +118,7 @@ exports.searchResult=function(req, res){
         }
     })
 }
-var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url hd_url sd_url videoTime';
+
 exports.getMyFavoritVr=function(req, res){
     var  msid=req.query._msid;
     FavoriteContent.find({msid:msid})

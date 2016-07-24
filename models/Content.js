@@ -49,6 +49,8 @@ var ContentSchema = new Schema({
     duration:Number,
     size:Number,
     bit_rate:Number,
+    index:{type:Number,index:true},
+    isindex:{type:Number,default:0},
 
 
 
