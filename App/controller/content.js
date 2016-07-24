@@ -54,7 +54,7 @@ exports.getContentByCategory=function(req,res){
     }
     //var filed='title stitle tags sImg date isTop  clickNum commentNum likeNum uhd_url hd_url sd_url videoTime';
     var category={"category":categoryid};
-    if(categoryid==1){
+    if(categoryid=="B18a0R-_"){
         category={"isTop":1};
     }
     var query=DbOpt.getApiPaginationResult(ContentModel,req,category,filed,"");
