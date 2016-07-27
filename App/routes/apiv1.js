@@ -22,6 +22,7 @@ router.get('/getContentByCategoryId',contentApi.getContentByCategory);
 // 获取主页列表
 router.get('/getMainList',contentApi.getMainPageDate);
 router.get('/searchVr',contentApi.searchResult);
+router.get('/updateDownCount', contentApi.udateDownCount);
 
 
 // 获取我喜欢的视频
@@ -29,7 +30,7 @@ router.get("/userinfo/favoritevr",contentApi.getMyFavoritVr);
 // 添加我喜欢的视频
 router.put('/userinfo/favoritevr',contentApi.putFavorVr);
 // 删除我喜欢的视频
-router.delete('/userinfo/favoritevr/:id',ensureAuthorizedController.ensureAuthorized, contentApi.delFavorrVr);
+router.delete('/userinfo/favoritevr', contentApi.delFavorrVr);
 
 
 //======================用戶相關的操作=============================

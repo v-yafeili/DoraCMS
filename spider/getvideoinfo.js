@@ -52,7 +52,7 @@ function bytesToSize(bytes) {
 }
 var searchConent =function(callback) {
     contentModel.findOne({isQiniu: 1, duration: {$exists: false}}, function (err, data) {
-        console.log(data);
+        //console.log(data);
         if (data)
             console.log(data._id);
         var url = data.hd_url ? data.hd_url : data.sd_url;

@@ -161,5 +161,28 @@ exports.putFavorVr=function(req, res){
     })
 }
 exports.delFavorrVr=function(req, res){
+    var  msid=req.query._msid;
+    var  contentId=req.query.contentId;
+    FavoriteContent.remove({'msid':msid,'contentId':contentId},function(err,data){
+        if(err){
+            return res.json(new ApiDataModel(0,"收藏出错"+err,""));
+        }
+        return res.json(new ApiDataModel(1,"",""));
+    })
+};
+exports.udateDownCount=function(req, res){
+    var  contentId=req.query.contentId;
+    ContentModel.findOne({'_id' : contentId},function(err,doc) {
+        if (err) {
+            res.end(err)
+        }
+        doc.downCount = doc.downCount ? doc.downCount + 1 : 1;
+        doc.save(function (err) {
+            if (err) {
+                return res.json(new ApiDataModel(0,"出错"+err,""));
+            }
 
+            return res.json(new ApiDataModel(1,"",""));
+        })
+    })
 }

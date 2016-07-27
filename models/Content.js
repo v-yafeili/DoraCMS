@@ -44,6 +44,7 @@ var ContentSchema = new Schema({
     videoTime:String,
     videoScore:String,
     hd_fileSize:String,
+    downCount:{ type: Number, default: 0 },
     ori_url:[String],
     isQiniu:{ type: Number, default: 0 }, // 文件是否在七牛服务器  1 同步成功 2 同步失败 3 传输中
     duration:Number,
