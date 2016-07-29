@@ -13,7 +13,7 @@ module.exports = {
     auth_cookie_name: 'doracms',
     encrypt_key : 'dora',
 //    数据库配置
-    URL: 'mongodb://101.200.204.240:27017/doracms',
+    URL: 'mongodb://114.215.131.167:27017/doracms',
     DB: 'doracms',
     HOST: '101.200.204.240',
     PORT: 27017,
